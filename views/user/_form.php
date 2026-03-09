@@ -105,7 +105,7 @@ use app\models\Center;
         <div class="col-md-4">
             <?= $form->field($model, 'is_join_table')->dropDownList(
                 $trueFalse,
-                ['prompt' => 'Jina la Mwenza']
+                ['prompt' => 'Unashiriki Jumuiya?']
             ) ?>
         </div>
         <div class="col-md-4">

@@ -1,8 +1,10 @@
 <?php
+use app\assets\AppAsset;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\Breadcrumbs;
 
+AppAsset::register($this);
 $this->beginPage();
 
 ?>
@@ -11,18 +13,13 @@ $this->beginPage();
 <!-- [Head] start -->
 
 <head>
-    <title>Home | KKKT</title>
     <!-- [Meta] -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-
     <meta charset="<?= Yii::$app->charset ?>">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
     <?= Html::csrfMetaTags() ?>
     <link rel="icon" type="image/x-icon" href="<?= Yii::getAlias('@web/images') ?>/favicon.ico">
-    <title><?= Html::encode($this->title) ?></title>
-
+    <title><?= Html::encode($this->title ?: 'KKKT') ?></title>
 
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&display=swap"
@@ -36,13 +33,8 @@ $this->beginPage();
     <!-- [Material Icons] https://fonts.google.com/icons -->
     <link rel="stylesheet" href="<?= Url::to('@web/newassets/fonts/material.css') ?>">
     <!-- [Template CSS Files] -->
-    <link rel="stylesheet" href="<?= Url::to('@web/newassets/css/style.css" id="main-style-link') ?>">
+    <link rel="stylesheet" href="<?= Url::to('@web/newassets/css/style.css') ?>" id="main-style-link">
     <link rel="stylesheet" href="<?= Url::to('@web/newassets/css/style-preset.css') ?>">
-
-
-
-    <!-- Mantis CSS -->
-    <link rel="stylesheet" href="<?= Url::to('@web/newassets/css/style.css') ?>">
 
     <?php $this->head() ?>
 
@@ -129,6 +121,44 @@ $this->beginPage();
 
         <script>font_change("Public-Sans");</script>
 
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                var sidebar = document.querySelector('.pc-sidebar');
+                if (!sidebar) {
+                    return;
+                }
+
+                var closeMobileSidebar = function () {
+                    if (window.innerWidth > 1024) {
+                        return;
+                    }
+
+                    sidebar.classList.remove('mob-sidebar-active');
+                    var overlay = sidebar.querySelector('.pc-menu-overlay');
+                    if (overlay) {
+                        overlay.remove();
+                    }
+                };
+
+                sidebar.querySelectorAll('.pc-navbar .pc-link').forEach(function (link) {
+                    link.addEventListener('click', function () {
+                        var parent = link.parentElement;
+                        var href = link.getAttribute('href') || '';
+                        if ((parent && parent.classList.contains('pc-hasmenu')) || href === '#' || href === '#!' || href === 'javascript:void(0)') {
+                            return;
+                        }
+
+                        window.setTimeout(closeMobileSidebar, 120);
+                    });
+                });
+
+                document.addEventListener('keydown', function (event) {
+                    if (event.key === 'Escape') {
+                        closeMobileSidebar();
+                    }
+                });
+            });
+        </script>
 
 
         <?php $this->endBody() ?>

@@ -1,7 +1,7 @@
 <?php
 
 $params = require __DIR__ . '/params.php';
-$db = require __DIR__ . '/db.php';
+$db     = require __DIR__ . '/db.php';
 
 $config = [
     'id' => 'basic-console',
@@ -28,29 +28,39 @@ $config = [
         'db' => $db,
     ],
     'params' => $params,
-    /*
-    'controllerMap' => [
-        'fixture' => [ // Fixture generation command line.
-            'class' => 'yii\faker\FixtureController',
-        ],
-    ],
-    */
+
+    // define modules key so we can safely add dev modules later
+    'modules' => [],
 ];
 
+/**
+ * DEV-ONLY modules/tools.
+ * Do NOT enable these in production.
+ */
 if (YII_ENV_DEV) {
-    // configuration adjustments for 'dev' environment
+
+    // Gii (code generator) - DEV only
     $config['bootstrap'][] = 'gii';
     $config['modules']['gii'] = [
         'class' => 'yii\gii\Module',
     ];
-    // configuration adjustments for 'dev' environment
-    // requires version `2.1.21` of yii2-debug module
+
+    // Debug - DEV only
     $config['bootstrap'][] = 'debug';
     $config['modules']['debug'] = [
         'class' => 'yii\debug\Module',
-        // uncomment the following to add your IP if you are not connecting from localhost.
-        //'allowedIPs' => ['127.0.0.1', '::1'],
+        // 'allowedIPs' => ['127.0.0.1', '::1'], // add your IP if needed
     ];
+
+    /**
+     * migrik (yii2-migration-generator) - DEV only
+     * WARNING: migrik expects Gii to be installed/enabled.
+     * If you don't use migrik, leave this disabled.
+     */
+    // $config['bootstrap'][] = 'migrik';
+    // $config['modules']['migrik'] = [
+    //     'class' => 'insolita\migrik\Module',
+    // ];
 }
 
 return $config;

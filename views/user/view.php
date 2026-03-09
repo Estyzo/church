@@ -13,11 +13,7 @@ $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
 
-
-
-
 <div class="user-view">
-
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -33,94 +29,82 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ]) ?>
     </p>
-    <div class="row">
 
+    <div class="row">
 
         <ul class="nav nav-tabs mt-3" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
                 <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button"
-                    role="tab" aria-controls="home" aria-selected="true">
+                        role="tab" aria-controls="home" aria-selected="true">
                     Taarifa za Msharika
                 </button>
             </li>
             <li class="nav-item" role="presentation">
                 <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button"
-                    role="tab" aria-controls="profile" aria-selected="false">
+                        role="tab" aria-controls="profile" aria-selected="false">
                     Taarifa za Tegemezi
                 </button>
             </li>
             <li class="nav-item" role="presentation">
                 <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button"
-                    role="tab" aria-controls="contact" aria-selected="false">
+                        role="tab" aria-controls="contact" aria-selected="false">
                     Taarifa za Matoleo
                 </button>
             </li>
         </ul>
 
         <div class="tab-content mt-2" id="myTabContent">
-            <div class="tab-pane  show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+
+            <div class="tab-pane show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                 <div class="col-md-10">
                     <?= DetailView::widget([
                         'model' => $model,
                         'attributes' => [
-                            //'id',
                             [
                                 'label' => 'Jina Kamili',
                                 'value' => $model->first_name . " " . $model->middle_name . " " . $model->last_name,
-
                             ],
                             ['attribute' => 'gender'],
                             ['attribute' => 'dob'],
                             [
                                 'attribute' => 'dob_region',
                                 'value' => function ($model) {
-                                                return $model->dobRegion?->name ?? 'N/A';
-                                            }
+                                    return $model->dobRegion?->name ?? 'N/A';
+                                }
                             ],
                             [
                                 'attribute' => 'dob_district',
                                 'value' => function ($model) {
-                                                return $model->dobDistrict?->name ?? 'N/A';
-                                            }
+                                    return $model->dobDistrict?->name ?? 'N/A';
+                                }
                             ],
                             [
                                 'attribute' => 'is_baptized',
                                 'value' => function ($model) {
-                                                if ($model->is_baptized) {
-                                                    return 'Ndio';
-                                                }
-                                                return 'Hapana';
-                                            }
+                                    return $model->is_baptized ? 'Ndio' : 'Hapana';
+                                }
                             ],
                             ['attribute' => 'marital_status'],
                             [
                                 'attribute' => 'confirmation',
                                 'value' => function ($model) {
-                                                if ($model->confirmation) {
-                                                    return 'Ndio';
-                                                }
-                                                return 'Hapana';
-                                            }
+                                    return $model->confirmation ? 'Ndio' : 'Hapana';
+                                }
                             ],
                             ['attribute' => 'marriage_type'],
                             ['attribute' => 'spouse_name'],
                             [
                                 'attribute' => 'is_join_table',
                                 'value' => function ($model) {
-                                                if ($model->is_join_table) {
-                                                    return 'Ndio';
-                                                }
-                                                return 'Hapana';
-                                            }
+                                    return $model->is_join_table ? 'Ndio' : 'Hapana';
+                                }
                             ],
                             [
                                 'attribute' => 'street_join',
                                 'value' => function ($model) {
-                                                if ($model->street_join) {
-                                                    return 'Ndio';
-                                                }
-                                                return 'Hapana';
-                                            }
+                                    // street_join is a text field, so show the value (not Yes/No)
+                                    return $model->street_join ?: 'N/A';
+                                }
                             ],
                             ['attribute' => 'church_elder'],
                             ['attribute' => 'occupation'],
@@ -134,26 +118,27 @@ $this->params['breadcrumbs'][] = $this->title;
                             [
                                 'attribute' => 'status',
                                 'value' => function ($model) {
-                                                if ($model->status) {
-                                                    return 'Hai';
-                                                }
-                                                return 'Si Hai';
-                                            }
+                                    return $model->status ? 'Hai' : 'Si Hai';
+                                }
                             ],
                             ['attribute' => 'created_at'],
                             [
                                 'label' => 'Amesajiliwa Na',
                                 'value' => function ($model) {
-                                                return $model->createdBy?->first_name . "  " . $model->createdBy?->last_name;
-                                            }
+                                    if (!$model->createdBy) return 'N/A';
+                                    // createdBy is SystemUser (users table) => show username/email
+                                    return $model->createdBy->username . ' (' . $model->createdBy->email . ')';
+                                }
                             ],
                         ],
                     ]) ?>
                 </div>
             </div>
+
             <div class="tab-pane" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                 <div class="col-md-10">
                     <h5>Tegemezi</h5>
+
                     <?= GridView::widget([
                         'dataProvider' => $dataProvider,
                         'columns' => [
@@ -165,16 +150,11 @@ $this->params['breadcrumbs'][] = $this->title;
                                 },
                             ],
                             'dob',
-                            //'user_id',
                             'dependant_type',
                             [
                                 'attribute' => 'is_budtized',
                                 'value' => function ($data) {
-                                    if ($data->is_budtized) {
-                                        return "NO";
-                                    }
-                                    return "YES";
-
+                                    return $data->is_budtized ? "YES" : "NO";
                                 },
                             ],
                             'occupation',
@@ -202,29 +182,26 @@ $this->params['breadcrumbs'][] = $this->title;
                                             ]
                                         );
                                     },
-
                                 ],
                             ],
                         ],
                     ]); ?>
                 </div>
             </div>
+
             <div class="tab-pane" id="contact" role="tabpanel" aria-labelledby="contact-tab">
                 <div class="col-md-10">
                     <h5>Matoleo</h5>
-
 
                     <?= GridView::widget([
                         'dataProvider' => $dataProviderPayment,
                         'columns' => [
                             ['class' => 'yii\grid\SerialColumn'],
-
                             [
                                 'label' => 'Msharika',
                                 'value' => function ($data) {
                                     return $data->user->first_name . " " . $data->user->last_name;
                                 }
-
                             ],
                             'contributionsType.name',
                             'amount',
@@ -254,7 +231,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                             ]
                                         );
                                     },
-
                                 ],
                             ],
                         ],
@@ -262,11 +238,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 </div>
             </div>
+
         </div>
 
-
-
-
-
-
     </div>
+
+</div>

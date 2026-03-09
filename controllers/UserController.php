@@ -2,11 +2,13 @@
 
 namespace app\controllers;
 
+use app\components\RoleAccess;
 use Yii;
 use app\models\User;
 use app\models\UserSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use app\models\DependantSearch;
 use app\models\ContributionSearch;
@@ -22,17 +24,31 @@ class UserController extends Controller
      */
     public function behaviors()
     {
-        return array_merge(
-            parent::behaviors(),
-            [
-                'verbs' => [
-                    'class' => VerbFilter::className(),
-                    'actions' => [
-                        'delete' => ['POST'],
+        return [
+            'access' => [
+                'class' => AccessControl::class,
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                        'actions' => ['index', 'view'],
+                        'matchCallback' => static fn() => RoleAccess::hasAny(['admin', 'clerk', 'viewer']),
+                    ],
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                        'actions' => ['create', 'update', 'delete'],
+                        'matchCallback' => static fn() => RoleAccess::hasAny(['admin', 'clerk']),
                     ],
                 ],
-            ]
-        );
+            ],
+            'verbs' => [
+                'class' => VerbFilter::class,
+                'actions' => [
+                    'delete' => ['POST'],
+                ],
+            ],
+        ];
     }
 
     /**
@@ -114,11 +130,10 @@ class UserController extends Controller
 
 
                 $model->created_by = Yii::$app->user->id;
-                $model->created_at = date('y-m-d H:i:s');
-                $model->password = md5($model->email);
-
-                $model->save(false);
-                return $this->redirect(['view', 'id' => $model->id]);
+                $model->created_at = date('Y-m-d H:i:s');
+                if ($model->save()) {
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
             }
         } else {
             $model->loadDefaultValues();

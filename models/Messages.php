@@ -13,7 +13,7 @@ use Yii;
  * @property int $created_by
  * @property string|null $center_at
  *
- * @property User $createdBy
+ * @property SystemUser $createdBy
  */
 class Messages extends \yii\db\ActiveRecord
 {
@@ -39,7 +39,7 @@ class Messages extends \yii\db\ActiveRecord
             [['created_by'], 'integer'],
             [['center_at'], 'safe'],
             [['subject'], 'string', 'max' => 255],
-            [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
+            [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => SystemUser::class, 'targetAttribute' => ['created_by' => 'id']],
         ];
     }
 
@@ -64,7 +64,7 @@ class Messages extends \yii\db\ActiveRecord
      */
     public function getCreatedBy()
     {
-        return $this->hasOne(User::class, ['id' => 'created_by']);
+        return $this->hasOne(SystemUser::class, ['id' => 'created_by']);
     }
 
 }

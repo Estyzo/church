@@ -44,12 +44,7 @@ use yii\widgets\ActiveForm;
 
 
         </div>
-        <div class="col-md-3">
-            <?=
-                $form->field($model, 'channel_name')
-                    ->dropDownList($paymentChannel, ['prompt' => 'Jina la Aina ya Malipo']);
-            ?>
-        </div>
+      
 
         <div class="col-md-6">
             <?= $form->field($model, 'payment_desc')->textarea(['rows' => 1]) ?>

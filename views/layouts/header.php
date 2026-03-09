@@ -1,9 +1,20 @@
 <?php
 
-use yii\helpers\Url;
 use yii\helpers\Html;
-use app\assets\AppAsset;
-AppAsset::register($this);
+
+$identity = Yii::$app->user->identity;
+$displayName = 'Guest';
+$displayRole = '';
+if ($identity !== null) {
+    if (!empty($identity->username)) {
+        $displayName = (string)$identity->username;
+    } elseif (!empty($identity->email)) {
+        $displayName = (string)$identity->email;
+    }
+    if (!empty($identity->role)) {
+        $displayRole = (string)$identity->role;
+    }
+}
 ?>
 <!--Header-part-->
 
@@ -67,9 +78,10 @@ AppAsset::register($this);
                     <a class="pc-head-link dropdown-toggle arrow-none me-0" data-bs-toggle="dropdown" href="#"
                         role="button" aria-haspopup="false" data-bs-auto-close="outside" aria-expanded="false">
                         <?= Html::img('@web/images/logo_kkkt.jpeg', ['alt' => 'KKKT', 'class' => 'user-avtar']); ?>
+<span>
+    <?= Html::encode($displayName) ?>
+</span>
 
-                        <?php $username = \app\models\User::find()->where(['id' => Yii::$app->user->id])->one(); ?>
-                        <span><?= ucfirst($username->first_name) . " " . ucfirst($username->last_name); ?></span>
                     </a>
                     <div class="dropdown-menu dropdown-user-profile dropdown-menu-end pc-h-dropdown">
                         <div class="dropdown-header">
@@ -79,13 +91,16 @@ AppAsset::register($this);
                                 </div>
                                 <div class="flex-grow-1 ms-3">
                                     <h6 class="mb-1">
-                                        <?= ucfirst($username->first_name) . " " . ucfirst($username->last_name); ?></h6>
-                                    <span>Msharika</span>
+<span>
+    <?= Html::encode($displayName) ?>
+</span>
+
+                                    <span><?= Html::encode($displayRole !== '' ? $displayRole : 'User') ?></span>
                                 </div>
                                         
-                                    <?= Html::beginForm(['/site/logout'], 'post', ['id' => 'logout-form']) ?>
+                                    <?= Html::beginForm(['/site/logout'], 'post', ['id' => 'logout-form-header']) ?>
                                     <?= Html::a('<i class="ti ti-power text-danger"></i>', '#', [
-                                    'onclick' => "document.getElementById('logout-form').submit(); return false;",
+                                    'onclick' => "document.getElementById('logout-form-header').submit(); return false;",
                                     'class' => 'pc-head-link bg-transparent',
                                     ]) ?>
                                     <?= Html::endForm() ?>
@@ -111,6 +126,11 @@ AppAsset::register($this);
                                     <i class="ti ti-user"></i>
                                     <span>Taarifa Binafsi</span>
                                 </a>
+                                <?= Html::a(
+                                    '<i class="ti ti-key"></i><span>Badili Nenosiri</span>',
+                                    ['/system-user/change-password'],
+                                    ['class' => 'dropdown-item']
+                                ) ?>
 
                             </div>
                             <div class="tab-pane fade" id="drp-tab-2" role="tabpanel" aria-labelledby="drp-t2"

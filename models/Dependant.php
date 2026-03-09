@@ -54,13 +54,13 @@ class Dependant extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'Tegemezi',
+            'id' => 'Mtoto',
             'first_name' => 'Jina la Kwanza',
             'middle_name' => 'Jina la Kati',
             'last_name' => 'Jina la Mwisho',
             'dob' => 'Tarehe ya Kuzaliwa',
             'user_id' => 'Jina la Msharika',
-            'dependant_type' => 'Aina ya Tegemezi',
+            'dependant_type' => 'Mtoto',
             'is_budtized' => 'Amebatizwa?',
             'occupation' => 'Kazi Anayofanya',
         ];

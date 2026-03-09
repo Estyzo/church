@@ -20,11 +20,11 @@ $config = [
             'class' => 'yii\caching\FileCache',
         ],
         // 'user' => [
-        //     'identityClass' => 'app\models\User',
+        //     'identityClass' => 'app\models\SystemUser',
         //     'enableAutoLogin' => true,
         // ],
         'user' => [
-            'identityClass' => 'app\models\User',
+            'identityClass' => 'app\models\SystemUser',
             'enableAutoLogin' => true,
             'enableSession' => true,
             'authTimeout' => 300,
@@ -49,19 +49,19 @@ $config = [
             ],
         ],
         'db' => $db,
-        /*
+        
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
             ],
         ],
-        */
-        'urlManager' => [
-            'enablePrettyUrl' => true,
-            'showScriptName' => false,
-            'rules' => [],
-        ],
+        
+        // 'urlManager' => [
+        //     'enablePrettyUrl' => true,
+        //     'showScriptName' => false,
+        //     'rules' => [],
+        // ],
     ],
     'params' => $params,
 ];

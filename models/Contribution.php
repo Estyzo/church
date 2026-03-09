@@ -20,6 +20,7 @@ use Yii;
  *
  * @property ContributionsType $contributionsType
  * @property User $user
+ * @property SystemUser $createdBy
  */
 class Contribution extends \yii\db\ActiveRecord
 {
@@ -48,6 +49,7 @@ class Contribution extends \yii\db\ActiveRecord
             [['payment_mode', 'reference_no', 'channel_name'], 'string', 'max' => 255],
             [['contribution_type_id'], 'exist', 'skipOnError' => true, 'targetClass' => ContributionsType::class, 'targetAttribute' => ['contribution_type_id' => 'id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
+            [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => SystemUser::class, 'targetAttribute' => ['created_by' => 'id']],
         ];
     }
 
@@ -96,6 +98,6 @@ class Contribution extends \yii\db\ActiveRecord
      */
     public function getCreatedBy()
     {
-        return $this->hasOne(User::class, ['id' => 'created_by']);
+        return $this->hasOne(SystemUser::class, ['id' => 'created_by']);
     }
 }

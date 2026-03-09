@@ -60,7 +60,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
      */
     public static function tableName()
     {
-        return 'users';
+        return 'members';
     }
 
     /**
@@ -72,11 +72,11 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             [['middle_name', 'designation', 'denomination', 'gender', 'dob', 'dob_region', 'dob_district', 'marital_status', 'marriage_type', 'spouse_name', 'street_join', 'church_elder', 'occupation', 'occupation_place', 'designation_designation', 'phone', 'email', 'next_of_kin_phone', 'home_congregation', 'authKey', 'password_reset_token', 'user_image', 'updated_at', 'created_at', 'created_by'], 'default', 'value' => null],
             [['is_join_table'], 'default', 'value' => 0],
             [['status'], 'default', 'value' => 1],
-            [['first_name', 'last_name', 'center_id', 'password'], 'required'],
+            [['first_name', 'last_name', 'center_id'], 'required'],
             [['dob', 'updated_at', 'created_at'], 'safe'],
             [['is_baptized', 'confirmation', 'is_join_table', 'center_id', 'status', 'created_by'], 'integer'],
             [['first_name', 'middle_name', 'last_name', 'designation', 'denomination', 'dob_region', 'dob_district', 'marital_status', 'marriage_type', 'spouse_name', 'street_join', 'church_elder', 'occupation', 'occupation_place', 'designation_designation', 'phone', 'email', 'next_of_kin_phone', 'home_congregation', 'password', 'authKey', 'password_reset_token', 'user_image'], 'string', 'max' => 255],
-            [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
+            [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => SystemUser::class, 'targetAttribute' => ['created_by' => 'id']],
             [['center_id'], 'exist', 'skipOnError' => true, 'targetClass' => Center::class, 'targetAttribute' => ['center_id' => 'id']],
             [['dob_district'], 'exist', 'skipOnError' => true, 'targetClass' => District::class, 'targetAttribute' => ['dob_district' => 'id']],
             [['dob_region'], 'exist', 'skipOnError' => true, 'targetClass' => Region::class, 'targetAttribute' => ['dob_region' => 'id']],
@@ -94,26 +94,26 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             'middle_name' => 'Jina la  Kati',
             'last_name' => 'Jina la Mwisho',
             'gender' => 'Jinsia',
-            'designation' => 'Cheo',
-            'denomination' => 'Zehebu Lako',
+            'designation' => 'Bahasha',
+            'denomination' => 'Dhehebu Lako',
             'dob' => 'Tarehe ya Kuzaliwa',
             'dob_region' => 'Mkoa Uliozaliwa',
             'dob_district' => 'Wilaya Uliozaliwa',
             'is_baptized' => 'Umebatizwa',
             'marital_status' => 'Hali ya Ndoa',
-            'confirmation' => 'Umebatizwa',
+            'confirmation' => 'Amepata Kipaimara',
             'marriage_type' => 'Aina ya Ndoa',
             'spouse_name' => 'Jina la Mke/Mme',
-            'is_join_table' => 'Unashiriki Jumuhiya?',
-            'street_join' => 'Mtaa wa Jumuhiya',
+            'is_join_table' => 'Unashiriki Jumuiya?',
+            'street_join' => 'Mtaa wa Jumuiya',
             'church_elder' => 'Mzee wa Kanisa',
             'occupation' => 'Kazi ya Msharika',
             'occupation_place' => 'Sehemu ya Kazi',
-            'designation_designation' => 'Cheo',
+            'designation_designation' => 'Bahasha',
             'phone' => 'Namba ya Simu',
             'email' => 'Barua Pepe',
             'next_of_kin_phone' => 'Mtu wa Karibu',
-            'home_congregation' => 'Ushirika wa Nyumbani',
+            'home_congregation' => 'Usharika wa Nyumbani',
             'center_id' => 'Sharika',
             'password' => 'Nwira',
             'authKey' => 'Auth Key',
@@ -143,7 +143,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
      */
     public function getContributions()
     {
-        return $this->hasMany(Contributions::class, ['user_id' => 'id']);
+        return $this->hasMany(Contribution::class, ['user_id' => 'id']);
     }
 
     /**
@@ -153,7 +153,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
      */
     public function getCreatedBy()
     {
-        return $this->hasOne(User::class, ['id' => 'created_by']);
+        return $this->hasOne(SystemUser::class, ['id' => 'created_by']);
     }
 
     /**
@@ -195,7 +195,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getUser()
+    public function getCreatedMembers()
     {
         return $this->hasMany(User::class, ['created_by' => 'id']);
     }
@@ -236,9 +236,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     //matching the old password with your existing password.
     public function findPasswords($attribute, $params)
     {
-        $user = User::model()->findByPk(Yii::app()->user->id);
-        if ($user->password != md5($this->password))
-            $this->addError($attribute, 'Old password is incorrect.');
+        $this->addError($attribute, 'Password updates are managed in system users.');
     }
 
     /**
@@ -247,21 +245,13 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
      * @param  string      $email
      * @return static|null
      */
-    public static function findByUsername($email)
-    {
-        $user = self::find()
-            ->where([
-                "email" => $email
-            ])
-            ->one();
-        // if (!count($user)) {
-        //     return null;
-        // }
-        if ($user == null) {
-            return null;
-        }
-        return new static($user);
-    }
+  public static function findByUsername($email)
+{
+    return self::find()
+        ->where(["email" => $email])
+        ->one();
+}
+
     public function getUsername()
     {
         return \Yii::$app->user->identity->email;
@@ -321,7 +311,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
      */
     public function validatePassword($password)
     {
-        return $this->password === md5($password);
+        return false;
     }
 
     // In your model (e.g., Post.php)

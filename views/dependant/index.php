@@ -10,7 +10,7 @@ use yii\widgets\Pjax;
 /** @var app\models\DependantSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Tegemezi';
+$this->title = 'Watoto';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="dependant-index">
@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'last_name',
             'dob',
             //'user_id',
-            'dependant_type',
+           // 'dependant_type',
             [
                 'attribute' => 'is_budtized',
                 'value' => function ($data) {

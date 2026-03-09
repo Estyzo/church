@@ -1,0 +1,168 @@
+[22-Apr-2025 09:11:10 UTC] PHP Warning:  Attempt to read property "first_name" on null in /home/soutjsdc/public_html/church/views/layouts/header.php on line 72
+[22-Apr-2025 09:11:10 UTC] PHP Warning:  Attempt to read property "last_name" on null in /home/soutjsdc/public_html/church/views/layouts/header.php on line 72
+[22-Apr-2025 09:11:10 UTC] PHP Warning:  Attempt to read property "first_name" on null in /home/soutjsdc/public_html/church/views/layouts/header.php on line 82
+[22-Apr-2025 09:11:10 UTC] PHP Warning:  Attempt to read property "last_name" on null in /home/soutjsdc/public_html/church/views/layouts/header.php on line 82
+[14-Jul-2025 12:00:39 UTC] PHP Warning:  Attempt to read property "first_name" on null in /home/soutjsdc/public_html/church/views/layouts/header.php on line 72
+[14-Jul-2025 12:00:39 UTC] PHP Warning:  Attempt to read property "last_name" on null in /home/soutjsdc/public_html/church/views/layouts/header.php on line 72
+[14-Jul-2025 12:00:39 UTC] PHP Warning:  Attempt to read property "first_name" on null in /home/soutjsdc/public_html/church/views/layouts/header.php on line 82
+[14-Jul-2025 12:00:39 UTC] PHP Warning:  Attempt to read property "last_name" on null in /home/soutjsdc/public_html/church/views/layouts/header.php on line 82
+[14-Jul-2025 12:00:53 UTC] PHP Warning:  Attempt to read property "first_name" on null in /home/soutjsdc/public_html/church/views/layouts/header.php on line 72
+[14-Jul-2025 12:00:53 UTC] PHP Warning:  Attempt to read property "last_name" on null in /home/soutjsdc/public_html/church/views/layouts/header.php on line 72
+[14-Jul-2025 12:00:53 UTC] PHP Warning:  Attempt to read property "first_name" on null in /home/soutjsdc/public_html/church/views/layouts/header.php on line 82
+[14-Jul-2025 12:00:53 UTC] PHP Warning:  Attempt to read property "last_name" on null in /home/soutjsdc/public_html/church/views/layouts/header.php on line 82
+[18-Jul-2025 13:13:58 UTC] An Error occurred while handling another error:
+yii\web\HeadersAlreadySentException: Headers already sent in /home/soutjsdc/public_html/church/models/User.php on line 1. in /home/soutjsdc/public_html/church/vendor/yiisoft/yii2/web/Response.php:369
+Stack trace:
+#0 /home/soutjsdc/public_html/church/vendor/yiisoft/yii2/web/Response.php(342): yii\web\Response->sendHeaders()
+#1 /home/soutjsdc/public_html/church/vendor/yiisoft/yii2/web/ErrorHandler.php(136): yii\web\Response->send()
+#2 /home/soutjsdc/public_html/church/vendor/yiisoft/yii2/base/ErrorHandler.php(152): yii\web\ErrorHandler->renderException()
+#3 [internal function]: yii\base\ErrorHandler->handleException()
+#4 {main}
+Previous exception:
+yii\base\UnknownClassException: Unable to find 'app\models\User' in file: /home/soutjsdc/public_html/church/models/User.php. Namespace missing? in /home/soutjsdc/public_html/church/vendor/yiisoft/yii2/BaseYii.php:296
+Stack trace:
+#0 /home/soutjsdc/public_html/church/models/LoginForm.php(77): yii\BaseYii::autoload()
+#1 /home/soutjsdc/public_html/church/models/LoginForm.php(49): app\models\LoginForm->getUser()
+#2 /home/soutjsdc/public_html/church/vendor/yiisoft/yii2/validators/InlineValidator.php(77): app\models\LoginForm->validatePassword()
+#3 /home/soutjsdc/public_html/church/vendor/yiisoft/yii2/validators/Validator.php(260): yii\validators\InlineValidator->validateAttribute()
+#4 /home/soutjsdc/public_html/church/vendor/yiisoft/yii2/base/Model.php(368): yii\validators\Validator->validateAttributes()
+#5 /home/soutjsdc/public_html/church/models/LoginForm.php(63): yii\base\Model->validate()
+#6 /home/soutjsdc/public_html/church/controllers/SiteController.php(121): app\models\LoginForm->login()
+#7 [internal function]: app\controllers\SiteController->actionLogin()
+#8 /home/soutjsdc/public_html/church/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array()
+#9 /home/soutjsdc/public_html/church/vendor/yiisoft/yii2/base/Controller.php(178): yii\base\InlineAction->runWithParams()
+#10 /home/soutjsdc/public_html/church/vendor/yiisoft/yii2/base/Module.php(552): yii\base\Controller->runAction()
+#11 /home/soutjsdc/public_html/church/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction()
+#12 /home/soutjsdc/public_html/church/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest()
+#13 /home/soutjsdc/public_html/church/web/index.php(12): yii\base\Application->run()
+#14 {main}
+$_SERVER = [
+    'PATH' => '/usr/local/bin:/bin:/usr/bin',
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br, zstd',
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.9,en-GB;q=0.8',
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded',
+    'CONTENT_LENGTH' => '247',
+    'HTTP_COOKIE' => 'roundcube_cookies=enabled; timezone=Asia/Baghdad; _csrf=fd2c41e4396496fee37ce823d8582b5db53aed0ff7176430433c579973bb3f22a%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22JSt-IVI3nsFGHV7DZIQmep_qUqpE1Fxh%22%3B%7D; PHPSESSID=rqh66s17l8js43ct7spde6i803; cpsession=soutjsdc%3axn7SwTY3cafVcyA_%2cd89ad39f5c8bddc41b6bbd4cb1f0f2f3',
+    'HTTP_HOST' => 'southerntechnologies.tech',
+    'HTTP_REFERER' => 'https://southerntechnologies.tech/church/web/site/login',
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 Edg/138.0.0.0',
+    'HTTP_CACHE_CONTROL' => 'max-age=0',
+    'HTTP_X_FORWARDED_FOR' => '51.159.225.188',
+    'HTTP_SEC_CH_UA' => '"Not)A;Brand";v="8", "Chromium";v="138", "Microsoft Edge";v="138"',
+    'HTTP_SEC_CH_UA_MOBILE' => '?0',
+    'HTTP_SEC_CH_UA_PLATFORM' => '"macOS"',
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1',
+    'HTTP_ORIGIN' => 'https://southerntechnologies.tech',
+    'HTTP_SEC_FETCH_SITE' => 'same-origin',
+    'HTTP_SEC_FETCH_MODE' => 'navigate',
+    'HTTP_SEC_FETCH_USER' => '?1',
+    'HTTP_SEC_FETCH_DEST' => 'document',
+    'HTTP_PRIORITY' => 'u=0, i',
+    'HTTP_X_FORWARDED_PROTO' => 'https',
+    'HTTP_X_HTTPS' => 'on',
+    'DOCUMENT_ROOT' => '/home/soutjsdc/public_html',
+    'REMOTE_ADDR' => '51.159.225.188',
+    'REMOTE_PORT' => '32774',
+    'SERVER_ADDR' => '198.54.114.177',
+    'SERVER_NAME' => 'southerntechnologies.tech',
+    'SERVER_ADMIN' => 'webmaster@southerntechnologies.tech',
+    'SERVER_PORT' => '443',
+    'REQUEST_SCHEME' => 'https',
+    'REQUEST_URI' => '/church/web/site/login',
+    'REDIRECT_URL' => '/church/web/site/login',
+    'REDIRECT_REQUEST_METHOD' => 'POST',
+    'PROXY_REMOTE_ADDR' => '198.54.114.177',
+    'HTTPS' => 'on',
+    'REDIRECT_STATUS' => '200',
+    'SCRIPT_FILENAME' => '/home/soutjsdc/public_html/church/web/index.php',
+    'QUERY_STRING' => '',
+    'SCRIPT_URI' => 'https://southerntechnologies.tech/church/web/site/login',
+    'SCRIPT_URL' => '/church/web/site/login',
+    'SCRIPT_NAME' => '/church/web/index.php',
+    'SERVER_PROTOCOL' => 'HTTP/1.1',
+    'SERVER_SOFTWARE' => 'LiteSpeed',
+    'REQUEST_METHOD' => 'POST',
+    'X-LSCACHE' => 'on',
+    'PHP_SELF' => '/church/web/index.php',
+    'REQUEST_TIME_FLOAT' => 1752844438.225556,
+    'REQUEST_TIME' => 1752844438,
+]
+[18-Jul-2025 13:14:14 UTC] An Error occurred while handling another error:
+yii\web\HeadersAlreadySentException: Headers already sent in /home/soutjsdc/public_html/church/models/User.php on line 1. in /home/soutjsdc/public_html/church/vendor/yiisoft/yii2/web/Response.php:369
+Stack trace:
+#0 /home/soutjsdc/public_html/church/vendor/yiisoft/yii2/web/Response.php(342): yii\web\Response->sendHeaders()
+#1 /home/soutjsdc/public_html/church/vendor/yiisoft/yii2/web/ErrorHandler.php(136): yii\web\Response->send()
+#2 /home/soutjsdc/public_html/church/vendor/yiisoft/yii2/base/ErrorHandler.php(152): yii\web\ErrorHandler->renderException()
+#3 [internal function]: yii\base\ErrorHandler->handleException()
+#4 {main}
+Previous exception:
+yii\base\UnknownClassException: Unable to find 'app\models\User' in file: /home/soutjsdc/public_html/church/models/User.php. Namespace missing? in /home/soutjsdc/public_html/church/vendor/yiisoft/yii2/BaseYii.php:296
+Stack trace:
+#0 /home/soutjsdc/public_html/church/models/LoginForm.php(77): yii\BaseYii::autoload()
+#1 /home/soutjsdc/public_html/church/models/LoginForm.php(49): app\models\LoginForm->getUser()
+#2 /home/soutjsdc/public_html/church/vendor/yiisoft/yii2/validators/InlineValidator.php(77): app\models\LoginForm->validatePassword()
+#3 /home/soutjsdc/public_html/church/vendor/yiisoft/yii2/validators/Validator.php(260): yii\validators\InlineValidator->validateAttribute()
+#4 /home/soutjsdc/public_html/church/vendor/yiisoft/yii2/base/Model.php(368): yii\validators\Validator->validateAttributes()
+#5 /home/soutjsdc/public_html/church/models/LoginForm.php(63): yii\base\Model->validate()
+#6 /home/soutjsdc/public_html/church/controllers/SiteController.php(121): app\models\LoginForm->login()
+#7 [internal function]: app\controllers\SiteController->actionLogin()
+#8 /home/soutjsdc/public_html/church/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array()
+#9 /home/soutjsdc/public_html/church/vendor/yiisoft/yii2/base/Controller.php(178): yii\base\InlineAction->runWithParams()
+#10 /home/soutjsdc/public_html/church/vendor/yiisoft/yii2/base/Module.php(552): yii\base\Controller->runAction()
+#11 /home/soutjsdc/public_html/church/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction()
+#12 /home/soutjsdc/public_html/church/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest()
+#13 /home/soutjsdc/public_html/church/web/index.php(12): yii\base\Application->run()
+#14 {main}
+$_SERVER = [
+    'PATH' => '/usr/local/bin:/bin:/usr/bin',
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br, zstd',
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.9,en-GB;q=0.8',
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded',
+    'CONTENT_LENGTH' => '247',
+    'HTTP_COOKIE' => 'roundcube_cookies=enabled; timezone=Asia/Baghdad; _csrf=fd2c41e4396496fee37ce823d8582b5db53aed0ff7176430433c579973bb3f22a%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22JSt-IVI3nsFGHV7DZIQmep_qUqpE1Fxh%22%3B%7D; PHPSESSID=rqh66s17l8js43ct7spde6i803; cpsession=soutjsdc%3axn7SwTY3cafVcyA_%2cd89ad39f5c8bddc41b6bbd4cb1f0f2f3',
+    'HTTP_HOST' => 'southerntechnologies.tech',
+    'HTTP_REFERER' => 'https://southerntechnologies.tech/church/web/site/login',
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 Edg/138.0.0.0',
+    'HTTP_CACHE_CONTROL' => 'max-age=0',
+    'HTTP_X_FORWARDED_FOR' => '51.159.225.188',
+    'HTTP_SEC_CH_UA' => '"Not)A;Brand";v="8", "Chromium";v="138", "Microsoft Edge";v="138"',
+    'HTTP_SEC_CH_UA_MOBILE' => '?0',
+    'HTTP_SEC_CH_UA_PLATFORM' => '"macOS"',
+    'HTTP_ORIGIN' => 'https://southerntechnologies.tech',
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1',
+    'HTTP_SEC_FETCH_SITE' => 'same-origin',
+    'HTTP_SEC_FETCH_MODE' => 'navigate',
+    'HTTP_SEC_FETCH_USER' => '?1',
+    'HTTP_SEC_FETCH_DEST' => 'document',
+    'HTTP_PRIORITY' => 'u=0, i',
+    'HTTP_X_FORWARDED_PROTO' => 'https',
+    'HTTP_X_HTTPS' => 'on',
+    'DOCUMENT_ROOT' => '/home/soutjsdc/public_html',
+    'REMOTE_ADDR' => '51.159.225.188',
+    'REMOTE_PORT' => '55538',
+    'SERVER_ADDR' => '198.54.114.177',
+    'SERVER_NAME' => 'southerntechnologies.tech',
+    'SERVER_ADMIN' => 'webmaster@southerntechnologies.tech',
+    'SERVER_PORT' => '443',
+    'REQUEST_SCHEME' => 'https',
+    'REQUEST_URI' => '/church/web/site/login',
+    'REDIRECT_URL' => '/church/web/site/login',
+    'REDIRECT_REQUEST_METHOD' => 'POST',
+    'PROXY_REMOTE_ADDR' => '198.54.114.177',
+    'HTTPS' => 'on',
+    'REDIRECT_STATUS' => '200',
+    'SCRIPT_FILENAME' => '/home/soutjsdc/public_html/church/web/index.php',
+    'QUERY_STRING' => '',
+    'SCRIPT_URI' => 'https://southerntechnologies.tech/church/web/site/login',
+    'SCRIPT_URL' => '/church/web/site/login',
+    'SCRIPT_NAME' => '/church/web/index.php',
+    'SERVER_PROTOCOL' => 'HTTP/1.1',
+    'SERVER_SOFTWARE' => 'LiteSpeed',
+    'REQUEST_METHOD' => 'POST',
+    'X-LSCACHE' => 'on',
+    'PHP_SELF' => '/church/web/index.php',
+    'REQUEST_TIME_FLOAT' => 1752844454.616821,
+    'REQUEST_TIME' => 1752844454,
+]

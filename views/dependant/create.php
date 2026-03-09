@@ -5,8 +5,8 @@ use yii\helpers\Html;
 /** @var yii\web\View $this */
 /** @var app\models\Dependant $model */
 
-$this->title = 'Sajiri Tegemezi';
-$this->params['breadcrumbs'][] = ['label' => 'Tegemezi', 'url' => ['index']];
+$this->title = 'Sajiri Watoto';
+$this->params['breadcrumbs'][] = ['label' => 'Watoto', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="dependant-create">

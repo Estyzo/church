@@ -1,15 +1,37 @@
 <?php
 
-use yii\helpers\Url;
 use yii\helpers\Html;
-//AppAsset::register($this);
-?>
 
+$currentRoute = Yii::$app->controller ? Yii::$app->controller->getRoute() : '';
+
+$isActive = static function (string $routePattern) use ($currentRoute): bool {
+    if (substr($routePattern, -2) === '/*') {
+        $prefix = substr($routePattern, 0, -1);
+        return strpos($currentRoute, $prefix) === 0;
+    }
+
+    return $currentRoute === $routePattern;
+};
+
+$linkOptions = static function (string $routePattern, array $options = []) use ($isActive): array {
+    $active = $isActive($routePattern);
+    $defaults = [
+        'class' => 'pc-link' . ($active ? ' active' : ''),
+    ];
+
+    if ($active) {
+        $defaults['aria-current'] = 'page';
+    }
+
+    return array_merge($defaults, $options);
+};
+
+$isAreaMenuActive = $isActive('district/*') || $isActive('region/*');
+?>
 
 <nav class="pc-sidebar">
     <div class="navbar-wrapper">
         <div class="m-header" style="padding-left:32%;">
-
             <?= Html::a(
                 Html::img('@web/images/logo_kkkt.jpeg', ['class' => 'img-fluid', 'style' => 'height:50px']),
                 ['site/index'],
@@ -22,7 +44,7 @@ use yii\helpers\Html;
                     <?= Html::a(
                         '<span class="pc-micon"><i class="ti ti-dashboard"></i></span> <span class="pc-mtext">Dashibodi</span>',
                         ['site/index'],
-                        ['class' => 'pc-link']
+                        $linkOptions('site/index')
                     ) ?>
                 </li>
 
@@ -30,34 +52,31 @@ use yii\helpers\Html;
                     <?= Html::a(
                         '<span class="pc-micon"><i class="ti ti-user"></i></span> <span class="pc-mtext">Washarika</span>',
                         ['user/index'],
-                        ['class' => 'pc-link']
+                        $linkOptions('user/*')
                     ) ?>
                 </li>
-
 
                 <li class="pc-item">
                     <?= Html::a(
                         '<span class="pc-micon"><i class="ti ti-report-money"></i></span> <span class="pc-mtext">Matoleo</span>',
                         ['contribution/index'],
-                        ['class' => 'pc-link']
+                        $linkOptions('contribution/*')
                     ) ?>
                 </li>
 
-
-
                 <li class="pc-item">
                     <?= Html::a(
-                        '<span class="pc-micon"><i class="ti ti-growth"></i></span> <span class="pc-mtext">Tegemezi</span>',
+                        '<span class="pc-micon"><i class="ti ti-growth"></i></span> <span class="pc-mtext">Watoto</span>',
                         ['dependant/index'],
-                        ['class' => 'pc-link']
+                        $linkOptions('dependant/*')
                     ) ?>
                 </li>
 
                 <li class="pc-item">
                     <?= Html::a(
-                        '<span class="pc-micon"><i class="ti ti-building-warehouse"></i></span> <span class="pc-mtext">Masharika</span>',
+                        '<span class="pc-micon"><i class="ti ti-building-warehouse"></i></span> <span class="pc-mtext">Sharika</span>',
                         ['center/index'],
-                        ['class' => 'pc-link']
+                        $linkOptions('center/*')
                     ) ?>
                 </li>
 
@@ -65,82 +84,85 @@ use yii\helpers\Html;
                     <?= Html::a(
                         '<span class="pc-micon"><i class="ti ti-speakerphone"></i></span> <span class="pc-mtext">Ujumbe</span>',
                         ['message/index'],
-                        ['class' => 'pc-link']
+                        $linkOptions('message/*')
                     ) ?>
                 </li>
+
                 <li class="pc-item">
                     <?= Html::a(
                         '<span class="pc-micon"><i class="ti ti-currency-dollar"></i></span> <span class="pc-mtext">Aina za Matoleo</span>',
                         ['contributions-type/index'],
-                        ['class' => 'pc-link']
+                        $linkOptions('contributions-type/*')
                     ) ?>
                 </li>
+
                 <li class="pc-item">
                     <?= Html::a(
-                        '<span class="pc-micon"><i class="ti ti-letter-w"></i></span> <span class="pc-mtext">Wilaya</span>',
-                        ['district/index'],
-                        ['class' => 'pc-link']
+                        '<span class="pc-micon"><i class="ti ti-user"></i></span> <span class="pc-mtext">Waliofariki</span>',
+                        '#',
+                        ['class' => 'pc-link disabled', 'aria-disabled' => 'true', 'tabindex' => '-1']
                     ) ?>
                 </li>
+
                 <li class="pc-item">
                     <?= Html::a(
-                        '<span class="pc-micon"><i class="ti ti-letter-m"></i></span> <span class="pc-mtext">Mikoa</span>',
-                        ['region/index'],
-                        ['class' => 'pc-link']
+                        '<span class="pc-micon"><i class="ti ti-user"></i></span> <span class="pc-mtext">Waliohama</span>',
+                        '#',
+                        ['class' => 'pc-link disabled', 'aria-disabled' => 'true', 'tabindex' => '-1']
                     ) ?>
                 </li>
+
+                <li class="pc-item pc-hasmenu<?= $isAreaMenuActive ? ' pc-trigger' : '' ?>">
+                    <a href="#!" class="pc-link<?= $isAreaMenuActive ? ' active' : '' ?>">
+                        <span class="pc-micon"><i class="ti ti-map"></i></span>
+                        <span class="pc-mtext">Maeneo</span>
+                    </a>
+                    <ul class="pc-submenu">
+                        <li class="pc-item">
+                            <?= Html::a(
+                                '<span class="pc-micon"><i class="ti ti-letter-w"></i></span> <span class="pc-mtext">Wilaya</span>',
+                                ['district/index'],
+                                $linkOptions('district/*')
+                            ) ?>
+                        </li>
+                        <li class="pc-item">
+                            <?= Html::a(
+                                '<span class="pc-micon"><i class="ti ti-letter-m"></i></span> <span class="pc-mtext">Mikoa</span>',
+                                ['region/index'],
+                                $linkOptions('region/*')
+                            ) ?>
+                        </li>
+                    </ul>
+                </li>
+
                 <li class="pc-item">
                     <?= Html::a(
                         '<span class="pc-micon"><i class="ti ti-list"></i></span> <span class="pc-mtext">Ripoti</span>',
                         ['site/report'],
-                        ['class' => 'pc-link']
+                        $linkOptions('site/report')
                     ) ?>
                 </li>
+
+                <?php if (!Yii::$app->user->isGuest && isset(Yii::$app->user->identity->role) && Yii::$app->user->identity->role === 'admin'): ?>
+                <li class="pc-item">
+                    <?= Html::a(
+                        '<span class="pc-micon"><i class="ti ti-shield-lock"></i></span> <span class="pc-mtext">System Users</span>',
+                        ['system-user/index'],
+                        $linkOptions('system-user/*')
+                    ) ?>
+                </li>
+                <?php endif; ?>
+
                 <hr class="sidebar-divider">
                 <li class="pc-item">
-
-                    <?= Html::beginForm(['/site/logout'], 'post', ['id' => 'logout-form']) ?>
+                    <?= Html::beginForm(['/site/logout'], 'post', ['id' => 'logout-form-sidebar']) ?>
                     <?= Html::a('<span class="pc-micon"><i class="ti ti-logout"></i></span> <span class="pc-mtext">Kutoka</span>', '#', [
-                        'onclick' => "document.getElementById('logout-form').submit(); return false;",
-                        'class' => 'pc-link', // adjust this to match your nav styles
+                        'onclick' => "document.getElementById('logout-form-sidebar').submit(); return false;",
+                        'class' => 'pc-link',
                     ]) ?>
                     <?= Html::endForm() ?>
                 </li>
-
-
-
-
-                <!----
-
-                <li class="pc-item pc-caption">
-                    <label>UI Components</label>
-                    <i class="ti ti-dashboard"></i>
-                </li>
-                <li class="pc-item">
-                    <a href="../elements/bc_typography.html" class="pc-link">
-                        <span class="pc-micon"><i class="ti ti-typography"></i></span>
-                        <span class="pc-mtext">Typography</span>
-                    </a>
-                </li>
-                <li class="pc-item">
-                    <a href="../elements/bc_color.html" class="pc-link">
-                        <span class="pc-micon"><i class="ti ti-color-swatch"></i></span>
-                        <span class="pc-mtext">Color</span>
-                    </a>
-                </li>
-
-                <li class="pc-item pc-hasmenu">
-                    <a href="#!" class="pc-link"><span class="pc-micon"><i class="ti ti-menu"></i></span><span
-                            class="pc-mtext">Menu
-                            levels</span><span class="pc-arrow"><i data-feather="chevron-right"></i></span></a>
-                    <ul class="pc-submenu">
-                        <li class="pc-item"><a class="pc-link" href="#!">Level 2.1</a></li>
-
-                    </ul>
-                </li>
---->
             </ul>
-
         </div>
     </div>
 </nav>

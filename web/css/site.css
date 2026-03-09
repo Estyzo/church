@@ -1,14 +1,14 @@
-main>.container {
+main > .container {
     padding: 70px 15px 20px;
 }
 
 .footer {
     background-color: #f5f5f5;
-    font-size: .9em;
+    font-size: 0.9em;
     height: 60px;
 }
 
-.footer>.container {
+.footer > .container {
     padding-right: 15px;
     padding-left: 15px;
 }
@@ -19,8 +19,8 @@ main>.container {
 }
 
 /* add sorting icons to gridview sort links */
-a.asc:after,
-a.desc:after {
+a.asc::after,
+a.desc::after {
     content: '';
     left: 3px;
     display: inline-block;
@@ -31,12 +31,12 @@ a.desc:after {
     background: transparent;
 }
 
-a.asc:after {
+a.asc::after {
     border-bottom: solid 7px #212529;
     border-top-width: 0;
 }
 
-a.desc:after {
+a.desc::after {
     border-top: solid 7px #212529;
     border-bottom-width: 0;
 }
@@ -59,204 +59,196 @@ a.desc:after {
     margin: 0 0 15px 0;
 }
 
-/* align the logout "link" (button in form) of the navbar */
-.nav li>form>button.logout {
-    padding-top: 7px;
-    color: rgba(255, 255, 255, 0.5);
-}
-
-@media(max-width:767px) {
-    .nav li>form>button.logout {
-        display: block;
-        text-align: left;
-        width: 100%;
-        padding: 10px 0;
-    }
-}
-
-.nav>li>form>button.logout:focus,
-.nav>li>form>button.logout:hover {
-    text-decoration: none;
-    color: rgba(255, 255, 255, 0.75);
-}
-
-.nav>li>form>button.logout:focus {
-    outline: none;
-}
-
 .form-group {
     margin-bottom: 1rem;
 }
 
-
-body {
-    font-family: Arial;
-    background: #f0f0f0;
-}
-
-.login-form {
-    width: 500px;
-    margin: 100px auto;
-    padding: 30px;
-    background: white;
-    border-radius: 10px;
-}
-
-.login-form input,
-.login-form button {
-    width: 100%;
-    margin: 10px 0;
-    padding: 10px;
-}
-
-.sidebar {
-    width: 200px;
-    background: #0d6efd;
-    height: 100vh;
-    position: fixed;
-    top: 0;
-    left: 0;
-}
-
-.sidebar ul {
-    list-style: none;
-    padding: 0;
-}
-
-.sidebar li {
-    margin: 0;
-}
-
-.sidebar a {
-    color: white;
-    display: block;
-    padding: 15px;
-    text-decoration: none;
-}
-
-.sidebar a:hover {
-    background: #555;
-}
-
-.main-content {
-    margin-left: 220px;
-    padding: 20px;
-}
-
-.slideshow img {
-    border-radius: 10px;
-}
-
-
-body {
-    font-family: sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f8f9fa;
-    /* Light background for the body */
-}
-
-.sidebar {
-    height: 100vh;
-    /* Full viewport height */
-    width: 250px;
-    background-color: #0d6efd;
-    /* Your specified background color */
-    color: white;
-    position: fixed;
-    /* Stay in place on scroll */
-    top: 0;
-    left: 0;
-    padding-top: 20px;
-    box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.1);
-    /* Subtle shadow */
-    z-index: 100;
-    /* Ensure it's above other content */
-}
-
-.sidebar-header {
-    padding: 20px;
-    text-align: center;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-    /* Light divider */
-    margin-bottom: 20px;
-}
-
-.sidebar-header h3 {
-    margin: 0;
-    font-size: 1.5em;
-    font-weight: bold;
-}
-
-.sidebar-nav ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.sidebar-nav li a {
-    display: block;
-    padding: 15px 20px;
-    text-decoration: none;
-    color: white;
-    transition: background-color 0.3s ease;
-}
-
-.sidebar-nav li a:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+.pc-sidebar .pc-link.active,
+.pc-sidebar .pc-link[aria-current="page"],
+.pc-sidebar .pc-item.pc-trigger > .pc-link {
+    background: rgba(255, 255, 255, 0.18);
     color: #fff;
-    font-weight: bold;
-    /* Slightly darker on hover */
+    font-weight: 600;
 }
 
-.sidebar-nav li a i {
-    margin-right: 10px;
-    width: 20px;
-    /* Align icons */
-    text-align: center;
+.pc-sidebar .pc-link.disabled {
+    opacity: 0.55;
+    pointer-events: none;
 }
 
-.content {
-    margin-left: 250px;
-    /* Adjust based on sidebar width */
-    padding: 20px;
+.pc-sidebar .pc-link:focus-visible {
+    outline: 2px solid rgba(255, 255, 255, 0.8);
+    outline-offset: -2px;
 }
 
-/* Responsive adjustments (optional) */
-@media (max-width: 768px) {
-    .sidebar {
-        width: 100%;
-        height: auto;
-        position: static;
-        box-shadow: none;
-        margin-bottom: 20px;
+.pc-sidebar {
+    will-change: left;
+}
+
+.pc-sidebar .pc-link {
+    transition: background-color 0.18s ease, color 0.18s ease, transform 0.12s ease;
+}
+
+.pc-sidebar .pc-link:active {
+    transform: translateX(1px);
+}
+
+.pc-sidebar .pc-menu-overlay {
+    background: rgba(15, 23, 42, 0.36);
+    backdrop-filter: blur(2px);
+    animation: sidebarOverlayIn 0.18s ease-out;
+}
+
+/* Center login box and prevent full-width stretch */
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-box {
+  width: 100%;
+  max-width: 420px;
+  padding: 24px;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 10px 30px rgba(0,0,0,.10);
+}
+
+.site-login {
+  width: 100%;
+  padding: 16px;
+}
+
+.auth-shell {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.auth-card {
+    width: min(100%, 460px);
+    border-radius: 16px;
+}
+
+.auth-card .form-control {
+    min-height: 44px;
+    border-radius: 10px;
+}
+
+.auth-card .btn {
+    min-height: 44px;
+    border-radius: 10px;
+    font-weight: 600;
+}
+
+.auth-card .form-check {
+    margin-bottom: 0;
+}
+
+@media (max-width: 575.98px) {
+    .auth-shell {
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 1024px) {
+    .pc-sidebar {
+        transition: left 0.2s ease, box-shadow 0.2s ease;
     }
 
-    .content {
-        margin-left: 0;
+    .pc-sidebar.mob-sidebar-active {
+        box-shadow: 0 14px 34px rgba(0, 0, 0, 0.24);
     }
 
-    .sidebar-header {
-        border-bottom: none;
-        margin-bottom: 10px;
-    }
-
-    .sidebar-nav li a {
-        padding: 10px 15px;
+    .pc-sidebar .pc-link {
+        padding-top: 0.72rem;
+        padding-bottom: 0.72rem;
     }
 }
 
-.form-check-input:checked {
-    width: 10px;
+@keyframes sidebarOverlayIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
 
-.login-form label.form-check-label {
-    position: absolute;
-    padding: 10px 5px;
+.dashboard-metric-card .card-body {
+    padding: 1.25rem;
 }
 
-.login-form h2 {
-    text-align: center;
+.dashboard-metric-card .h3 {
+    font-weight: 700;
+    letter-spacing: -0.01em;
+}
+
+.metric-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+}
+
+.metric-icon-primary {
+    background: rgba(13, 110, 253, 0.14);
+    color: #0d6efd;
+}
+
+.metric-icon-success {
+    background: rgba(25, 135, 84, 0.14);
+    color: #198754;
+}
+
+.metric-icon-warning {
+    background: rgba(255, 193, 7, 0.2);
+    color: #b88900;
+}
+
+.metric-icon-danger {
+    background: rgba(220, 53, 69, 0.14);
+    color: #dc3545;
+}
+
+.dashboard-panel-card .card-header,
+.dashboard-table-card .card-header {
+    padding: 1rem 1.25rem 0;
+}
+
+.dashboard-table-card .table thead th {
+    font-size: 0.75rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #6c757d;
+    border-bottom-color: #edf1f7;
+}
+
+.dashboard-table-card .table tbody td {
+    padding-top: 0.85rem;
+    padding-bottom: 0.85rem;
+}
+
+.dashboard-table-card .table tbody tr:hover td {
+    background: #fafcff;
+}
+
+.dashboard-grid-footer {
+    border-top: 1px solid #edf1f7;
+    background: #fbfcfe;
+}
+
+.dashboard-grid-footer .pagination .page-link {
+    border-radius: 8px;
+    border-color: #dee2e6;
 }
 
 .breadcrumb {

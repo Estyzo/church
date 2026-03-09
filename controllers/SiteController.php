@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\components\RoleAccess;
 use app\models\Contribution;
 use app\models\ContributionsType;
 use app\models\Dependant;
@@ -29,12 +30,13 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::class,
-                'only' => ['logout'],
+                'only' => ['logout', 'index', 'report', 'export'],
                 'rules' => [
                     [
-                        'actions' => ['logout'],
+                        'actions' => ['logout', 'index', 'report', 'export'],
                         'allow' => true,
                         'roles' => ['@'],
+                        'matchCallback' => static fn() => RoleAccess::hasAny(['admin', 'clerk', 'viewer']),
                     ],
                 ],
             ],
@@ -85,6 +87,11 @@ class SiteController extends Controller
         $matoleo = Contribution::find()->count();
         $ainamatoleo = ContributionsType::find()->count();
         $ujumbe = Messages::find()->count();
+        $yearStart = date('Y-01-01');
+        $yearEnd = date('Y-12-31');
+        $mapatoKwaMwaka = (float) (Contribution::find()
+            ->andWhere(['between', 'date_of_payment', $yearStart, $yearEnd])
+            ->sum('amount') ?? 0);
 
 
 
@@ -96,7 +103,8 @@ class SiteController extends Controller
                 'tegemezi' => $tegemezi,
                 'matoleo' => $matoleo,
                 'ainamatoleo' => $ainamatoleo,
-                'ujumbe' => $ujumbe
+                'ujumbe' => $ujumbe,
+                'mapatoKwaMwaka' => $mapatoKwaMwaka
             ]
         );
     }

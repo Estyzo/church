@@ -1,74 +1,54 @@
 <?php
 
-
 /** @var yii\web\View $this */
 /** @var yii\bootstrap5\ActiveForm $form */
 /** @var app\models\LoginForm $model */
 
-
-// use yii\bootstrap5\Html;
-use yii\helpers\Html;
 use yii\bootstrap5\ActiveForm;
+use yii\helpers\Html;
 
-Html::beginForm('/logout');
-Html::a('Logout', '#', ['data-confirm' => 'Are you sure?']);
-Html::endForm();
+$this->title = 'Kuingia';
 ?>
 
+<div class="auth-shell container py-4 py-md-5">
+    <div class="auth-card card border-0 shadow-sm mx-auto">
+        <div class="card-body p-4 p-md-5">
+            <h1 class="h4 text-center mb-2">Karibu KKKT</h1>
+            <p class="text-center text-muted mb-4">Ingia kuendelea kwenye mfumo</p>
 
-<div class="login-form">
-    <h2>Kuingia</h2>
-    <?php $form = ActiveForm::begin([
-        'id' => 'login-form',
-        'layout' => 'horizontal',
-        'class' => 'clearfix',
-        'fieldConfig' => [
-            'template' => "{label}\n{input}\n{error}",
-            'labelOptions' => ['class' => 'col-lg-3 col-form-label mr-lg-3'],
-            'inputOptions' => ['class' => 'col-lg-3 form-control'],
-            'errorOptions' => ['class' => 'col-lg-7 invalid-feedback'],
-        ],
-    ]); ?>
-    <div class="col-md-12">
-        <label for="form_username_email" class="row">
-            Barua Pepe
-        </label>
-        <?= $form->field($model, 'username')->textInput(['autofocus' => true])->label(false) ?>
-    </div>
+            <?php $form = ActiveForm::begin([
+                'id' => 'login-form',
+                'fieldConfig' => [
+                    'template' => "{label}\n{input}\n{error}",
+                ],
+            ]); ?>
 
-    <div class="col-md-12">
-        <label for="form_password" class="row">
-            Nywira
-        </label>
-        <?= $form->field($model, 'password')->passwordInput()->label(false) ?>
-    </div>
-    <div class="row">
-        <div class="col-md-6 checkbox pull-left mt-10">
-            <label for="form_checkbox">
-                <!-- Remember me  -->
-                <?= $form->field($model, 'rememberMe')
-                    ->checkbox([
-                        'template' => "<div class=\"offset-lg-1 col-lg-10 custom-control custom-checkbox\">{input} {label}</div>
-                  \n<div class=\"col-lg-10\">{error}</div>"
-                    ])->label('Kumbuka')
-                    ?>
-            </label>
-        </div>
+            <?= $form->field($model, 'username')
+                ->textInput([
+                    'autofocus' => true,
+                    'placeholder' => 'Barua pepe au jina la mtumiaji',
+                ])
+                ->label('Barua Pepe/Jina') ?>
 
-        <div class="col-md-6 form-group pull-right mt-1">
-            <?= Html::submitButton(
-                'Ingia',
-                [
-                    'class' => 'btn btn-dark btn-sm',
-                    'name' => 'login-button',
-                    'style' => 'margin-right:10px;'
-                ]
-            ) ?>
+            <?= $form->field($model, 'password')
+                ->passwordInput([
+                    'placeholder' => 'Nenosiri',
+                ])
+                ->label('Nenosiri') ?>
+
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+                <?= $form->field($model, 'rememberMe', [
+                    'options' => ['class' => 'form-check m-0'],
+                    'template' => "{input} {label}\n{error}",
+                    'labelOptions' => ['class' => 'form-check-label'],
+                ])->checkbox(['class' => 'form-check-input'], false)->label('Kumbuka') ?>
+
+                <a class="small text-decoration-none" href="#">Je, umesahau nenosiri?</a>
+            </div>
+
+            <?= Html::submitButton('Ingia', ['class' => 'btn btn-primary w-100', 'name' => 'login-button']) ?>
+
+            <?php ActiveForm::end(); ?>
         </div>
     </div>
-
-    <div class="clear text-center pt-10">
-        <a class="text-theme-colored font-weight-600 font-12" href="#">Je Umesahau Nywira Yako?</a>
-    </div>
-    <?php ActiveForm::end(); ?>
 </div>

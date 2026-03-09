@@ -2,11 +2,13 @@
 
 namespace app\controllers;
 
+use app\components\RoleAccess;
 use Yii;
 use app\models\Contribution;
 use app\models\ContributionSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 
 
@@ -20,17 +22,31 @@ class ContributionController extends Controller
      */
     public function behaviors()
     {
-        return array_merge(
-            parent::behaviors(),
-            [
-                'verbs' => [
-                    'class' => VerbFilter::className(),
-                    'actions' => [
-                        'delete' => ['POST'],
+        return [
+            'access' => [
+                'class' => AccessControl::class,
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                        'actions' => ['index', 'view'],
+                        'matchCallback' => static fn() => RoleAccess::hasAny(['admin', 'clerk', 'viewer']),
+                    ],
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                        'actions' => ['create', 'contribution', 'update', 'delete'],
+                        'matchCallback' => static fn() => RoleAccess::hasAny(['admin', 'clerk']),
                     ],
                 ],
-            ]
-        );
+            ],
+            'verbs' => [
+                'class' => VerbFilter::class,
+                'actions' => [
+                    'delete' => ['POST'],
+                ],
+            ],
+        ];
     }
 
     /**
@@ -76,12 +92,13 @@ class ContributionController extends Controller
             'CASH' => 'CASH',
             'MOBILE' => 'MOBILE',
             'BANK' => 'BANK',
+            'CONTROLNO'=>'CONTROL NO',
         ];
 
         $paymentChannel = [
             'CASH' => 'CASH',
-            'AIRTEL' => 'AIRTEL',
-            'VODACOM' => 'VODACOM',
+            'BANK' => 'BANK',
+            'MOBILE' => 'MOBILE',
         ];
 
         $model = new Contribution();
@@ -112,19 +129,21 @@ class ContributionController extends Controller
             'CASH' => 'CASH',
             'MOBILE' => 'MOBILE',
             'BANK' => 'BANK',
+            'CONTROLNO'=>'CONTROL NO'
         ];
 
         $paymentChannel = [
             'CASH' => 'CASH',
-            'AIRTEL' => 'AIRTEL',
-            'VODACOM' => 'VODACOM',
+            'BANK' => 'BANK',
+            'MOBILE' => 'MOBILE',
         ];
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 $model->created_by = Yii::$app->user->id;
-                $model->save(false);
-                return $this->redirect(['view', 'id' => $model->id]);
+                if ($model->save()) {
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
             }
         } else {
             $model->loadDefaultValues();

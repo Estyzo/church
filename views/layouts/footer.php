@@ -7,7 +7,7 @@ use yii\helpers\Html;
         <div class="row">
             <div class="col-sm my-1">
                 <p class="m-0">
-                    <?= date('Y'); ?> &copy; KKKT DKM.
+                    <?= date('Y'); ?> &copy; KKKT MTWARA.
                 </p>
             </div>
             <div class="col-auto my-1">

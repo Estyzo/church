@@ -2,11 +2,13 @@
 
 namespace app\controllers;
 
-use yii;
+use app\components\RoleAccess;
+use Yii;
 use app\models\Messages;
 use app\models\MessageSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 
 /**
@@ -19,17 +21,31 @@ class MessageController extends Controller
      */
     public function behaviors()
     {
-        return array_merge(
-            parent::behaviors(),
-            [
-                'verbs' => [
-                    'class' => VerbFilter::className(),
-                    'actions' => [
-                        'delete' => ['POST'],
+        return [
+            'access' => [
+                'class' => AccessControl::class,
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                        'actions' => ['index', 'view'],
+                        'matchCallback' => static fn() => RoleAccess::hasAny(['admin', 'clerk', 'viewer']),
+                    ],
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                        'actions' => ['create', 'update', 'delete'],
+                        'matchCallback' => static fn() => RoleAccess::hasAny(['admin', 'clerk']),
                     ],
                 ],
-            ]
-        );
+            ],
+            'verbs' => [
+                'class' => VerbFilter::class,
+                'actions' => [
+                    'delete' => ['POST'],
+                ],
+            ],
+        ];
     }
 
     /**
@@ -73,7 +89,7 @@ class MessageController extends Controller
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 $model->created_by = Yii::$app->user->id;
-                $model->center_at = date('y-m-d H:i:s');
+                $model->center_at = date('Y-m-d H:i:s');
 
                 $model->save();
                 return $this->redirect(['view', 'id' => $model->id]);

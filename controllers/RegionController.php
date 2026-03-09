@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\components\RoleAccess;
 use yii\filters\AccessControl;
 use app\models\Region;
 use app\models\RegionSearch;
@@ -18,28 +19,32 @@ class RegionController extends Controller
      * @inheritDoc
      */
     public function behaviors()
-    { {
-            return [
-                'access' => [
-                    'class' => AccessControl::class,
-                    'only' => ['logout'],
-                    'rules' => [
-                            [
-                                'actions' => ['logout'],
-                                'allow' => true,
-                                'roles' => ['@'],
-                            ],
-                        ],
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::class,
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                        'actions' => ['index', 'view'],
+                        'matchCallback' => static fn() => RoleAccess::hasAny(['admin', 'clerk', 'viewer']),
+                    ],
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                        'actions' => ['create', 'update', 'delete'],
+                        'matchCallback' => static fn() => RoleAccess::hasAny(['admin', 'clerk']),
+                    ],
                 ],
-                'verbs' => [
-                    'class' => VerbFilter::class,
-                    'actions' => [
-                            'logout' => ['post'],
-                        ],
+            ],
+            'verbs' => [
+                'class' => VerbFilter::class,
+                'actions' => [
+                    'delete' => ['POST'],
                 ],
-            ];
-        }
-
+            ],
+        ];
     }
 
     /**
