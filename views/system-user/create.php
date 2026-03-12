@@ -5,8 +5,8 @@ use yii\helpers\Html;
 /** @var yii\web\View $this */
 /** @var app\models/SystemUser $model */
 
-$this->title = 'Create System User';
-$this->params['breadcrumbs'][] = ['label' => 'System Users', 'url' => ['index']];
+$this->title = 'Sajili Mtumiaji wa Mfumo';
+$this->params['breadcrumbs'][] = ['label' => 'Watumiaji wa Mfumo', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="system-user-create">

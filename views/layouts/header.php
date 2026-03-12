@@ -3,8 +3,9 @@
 use yii\helpers\Html;
 
 $identity = Yii::$app->user->identity;
-$displayName = 'Guest';
+$displayName = 'Mgeni';
 $displayRole = '';
+$roleLabels = \app\models\SystemUser::roleOptions();
 if ($identity !== null) {
     if (!empty($identity->username)) {
         $displayName = (string)$identity->username;
@@ -46,7 +47,7 @@ if ($identity !== null) {
                     </a>
                     <div class="dropdown-menu dropdown-notification dropdown-menu-end pc-h-dropdown">
                         <div class="dropdown-header d-flex align-items-center justify-content-between">
-                            <h5 class="m-0">Message</h5>
+                            <h5 class="m-0">Ujumbe</h5>
                             <a href="#!" class="pc-head-link bg-transparent"><i class="ti ti-x text-danger"></i></a>
                         </div>
                         <div class="dropdown-divider"></div>
@@ -55,13 +56,13 @@ if ($identity !== null) {
                             <div class="list-group list-group-flush w-100">
                                 <a class="list-group-item list-group-item-action">
                                     <div class="d-flex">
-                                        <div class="flex-shrink-0">lo
+                                        <div class="flex-shrink-0">
                                             <?php echo Html::img('@web/images/logo_kkkt.jpeg', ['alt' => 'KKKT', 'class' => 'user-avtar']); ?>
                                         </div>
                                         <div class="flex-grow-1 ms-1">
-                                            <span class="float-end text-muted">3:00 AM</span>
-                                            <p class="text-body mb-1">It's <b>Cristina danny's</b> birthday today.</p>
-                                            <span class="text-muted">2 min ago</span>
+                                            <span class="float-end text-muted">3:00 Asubuhi</span>
+                                            <p class="text-body mb-1">Leo ni siku ya kuzaliwa ya <b>Cristina Danny</b>.</p>
+                                            <span class="text-muted">Dakika 2 zilizopita</span>
                                         </div>
                                     </div>
                                 </a>
@@ -70,7 +71,7 @@ if ($identity !== null) {
                         </div>
                         <div class="dropdown-divider"></div>
                         <div class="text-center py-2">
-                            <a href="#!" class="link-primary">View all</a>
+                            <a href="#!" class="link-primary">Tazama zote</a>
                         </div>
                     </div>
                 </li>
@@ -95,7 +96,7 @@ if ($identity !== null) {
     <?= Html::encode($displayName) ?>
 </span>
 
-                                    <span><?= Html::encode($displayRole !== '' ? $displayRole : 'User') ?></span>
+                                    <span><?= Html::encode($displayRole !== '' ? ($roleLabels[$displayRole] ?? $displayRole) : 'Mtumiaji') ?></span>
                                 </div>
                                         
                                     <?= Html::beginForm(['/site/logout'], 'post', ['id' => 'logout-form-header']) ?>
@@ -115,7 +116,7 @@ if ($identity !== null) {
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link" id="drp-t2" data-bs-toggle="tab" data-bs-target="#drp-tab-2"
                                     type="button" role="tab" aria-controls="drp-tab-2" aria-selected="false"><i
-                                        class="ti ti-settings"></i> Seti</button>
+                                        class="ti ti-settings"></i> Mipangilio</button>
                             </li>
                         </ul>
                         <div class="tab-content" id="mysrpTabContent">

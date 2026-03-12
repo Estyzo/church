@@ -3,8 +3,10 @@
 return [
     'class' => 'yii\db\Connection',
     'dsn' => 'mysql:host=localhost;dbname=soutjsdc_church',
-   'username' => 'soutjsdc_church',
-    'password' => 'msharika_123',
+   //'username' => 'soutjsdc_church',
+   // 'password' => 'msharika_123',
+    'username' => 'hassanlugelo',
+    'password' => 'hassanlugelo',
    'charset' => 'utf8',
 
 

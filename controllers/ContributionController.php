@@ -6,6 +6,7 @@ use app\components\RoleAccess;
 use Yii;
 use app\models\Contribution;
 use app\models\ContributionSearch;
+use app\models\User;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\AccessControl;
@@ -87,21 +88,13 @@ class ContributionController extends Controller
      */
     public function actionContribution($id)
     {
+        $paymentType = Contribution::paymentModeOptions();
+        $paymentChannel = Contribution::paymentModeOptions();
+        $member = $this->findUserModel($id);
 
-        $paymentType = [
-            'CASH' => 'CASH',
-            'MOBILE' => 'MOBILE',
-            'BANK' => 'BANK',
-            'CONTROLNO'=>'CONTROL NO',
-        ];
-
-        $paymentChannel = [
-            'CASH' => 'CASH',
-            'BANK' => 'BANK',
-            'MOBILE' => 'MOBILE',
-        ];
-
-        $model = new Contribution();
+        $model = new Contribution([
+            'user_id' => $member->id,
+        ]);
         if ($this->request->isPost && $model->load($this->request->post())) {
             $model->user_id = $id;
             $model->created_by = Yii::$app->user->id;
@@ -109,11 +102,11 @@ class ContributionController extends Controller
             return $this->redirect(['user/view', 'id' => $id]);
         }
 
-        return $this->render('create', [
+        return $this->render('create', array_merge([
             'model' => $model,
             'paymentType' => $paymentType,
-            'paymentChannel' => $paymentChannel
-        ]);
+            'paymentChannel' => $paymentChannel,
+        ], $this->buildMemberFormOptions($member)));
     }
 
     /**
@@ -125,18 +118,8 @@ class ContributionController extends Controller
     {
         $model = new Contribution();
 
-        $paymentType = [
-            'CASH' => 'CASH',
-            'MOBILE' => 'MOBILE',
-            'BANK' => 'BANK',
-            'CONTROLNO'=>'CONTROL NO'
-        ];
-
-        $paymentChannel = [
-            'CASH' => 'CASH',
-            'BANK' => 'BANK',
-            'MOBILE' => 'MOBILE',
-        ];
+        $paymentType = Contribution::paymentModeOptions();
+        $paymentChannel = Contribution::paymentModeOptions();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
@@ -149,11 +132,11 @@ class ContributionController extends Controller
             $model->loadDefaultValues();
         }
 
-        return $this->render('create', [
+        return $this->render('create', array_merge([
             'model' => $model,
             'paymentType' => $paymentType,
-            'paymentChannel' => $paymentChannel
-        ]);
+            'paymentChannel' => $paymentChannel,
+        ], $this->buildMemberFormOptions()));
     }
 
     /**
@@ -166,14 +149,18 @@ class ContributionController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $paymentType = Contribution::paymentModeOptions();
+        $paymentChannel = Contribution::paymentModeOptions();
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
-        return $this->render('update', [
+        return $this->render('update', array_merge([
             'model' => $model,
-        ]);
+            'paymentType' => $paymentType,
+            'paymentChannel' => $paymentChannel,
+        ], $this->buildMemberFormOptions()));
     }
 
     /**
@@ -203,6 +190,49 @@ class ContributionController extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+        throw new NotFoundHttpException('Ukurasa ulioombwa haupo.');
+    }
+
+    protected function findUserModel($id)
+    {
+        if (($model = User::findOne(['id' => $id])) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('Msharika aliyeombwa hapatikani.');
+    }
+
+    private function buildMemberFormOptions(?User $lockedMember = null): array
+    {
+        $members = $lockedMember !== null
+            ? [$lockedMember]
+            : User::find()
+                ->orderBy([
+                    'first_name' => SORT_ASC,
+                    'middle_name' => SORT_ASC,
+                    'last_name' => SORT_ASC,
+                ])
+                ->all();
+
+        $userOptions = [];
+        $userDesignations = [];
+
+        foreach ($members as $member) {
+            $fullName = trim(implode(' ', array_filter([
+                $member->first_name,
+                $member->middle_name,
+                $member->last_name,
+            ])));
+
+            $userOptions[$member->id] = $fullName !== '' ? $fullName : 'Msharika #' . $member->id;
+            $userDesignations[$member->id] = $member->designation_designation ?: 'Haijawekwa';
+        }
+
+        return [
+            'userOptions' => $userOptions,
+            'userDesignations' => $userDesignations,
+            'lockUser' => $lockedMember !== null,
+            'selectedUserName' => $lockedMember !== null ? ($userOptions[$lockedMember->id] ?? '') : null,
+        ];
     }
 }

@@ -6,9 +6,9 @@ use yii\helpers\Html;
 /** @var app\models\ContributionsType $model */
 
 $this->title = 'Badili Aina ya Matoleo: ' . $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Aina ya Matoleo', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Aina za Matoleo', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = 'Badili';
 ?>
 <div class="contributions-type-update">
 

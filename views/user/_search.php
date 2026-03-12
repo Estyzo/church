@@ -1,92 +1,70 @@
 <?php
 
+use app\models\Center;
+use app\models\User;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /** @var yii\web\View $this */
 /** @var app\models\UserSearch $model */
 /** @var yii\widgets\ActiveForm $form */
+
+$identity = Yii::$app->user->identity;
+$centerQuery = Center::find()->orderBy('name');
+if ($identity !== null && ($identity->role ?? null) !== 'admin' && !empty($identity->center_id)) {
+    $centerQuery->andWhere(['id' => (int) $identity->center_id]);
+}
+$centerOptions = ArrayHelper::map($centerQuery->all(), 'id', 'name');
 ?>
 
-<div class="user-search">
+<div class="user-search filter-toolbar">
 
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
         'method' => 'get',
         'options' => [
-            'data-pjax' => 1
+            'data-pjax' => 1,
+            'class' => 'row g-3 align-items-end',
         ],
     ]); ?>
 
-    <?= $form->field($model, 'id') ?>
-
-    <?= $form->field($model, 'first_name') ?>
-
-    <?= $form->field($model, 'middle_name') ?>
-
-    <?= $form->field($model, 'last_name') ?>
-
-    <?= $form->field($model, 'designation') ?>
-
-    <?php // echo $form->field($model, 'denomination') ?>
-
-    <?php // echo $form->field($model, 'dob') ?>
-
-    <?php // echo $form->field($model, 'dob_region') ?>
-
-    <?php // echo $form->field($model, 'dob_district') ?>
-
-    <?php // echo $form->field($model, 'is_baptized') ?>
-
-    <?php // echo $form->field($model, 'marital_status') ?>
-
-    <?php // echo $form->field($model, 'confirmation') ?>
-
-    <?php // echo $form->field($model, 'marriage_type') ?>
-
-    <?php // echo $form->field($model, 'spouse_name') ?>
-
-    <?php // echo $form->field($model, 'is_join_table') ?>
-
-    <?php // echo $form->field($model, 'street_join') ?>
-
-    <?php // echo $form->field($model, 'church_elder') ?>
-
-    <?php // echo $form->field($model, 'occupation') ?>
-
-    <?php // echo $form->field($model, 'occupation_place') ?>
-
-    <?php // echo $form->field($model, 'designation_designation') ?>
-
-    <?php // echo $form->field($model, 'phone') ?>
-
-    <?php // echo $form->field($model, 'email') ?>
-
-    <?php // echo $form->field($model, 'next_of_kin_phone') ?>
-
-    <?php // echo $form->field($model, 'home_congregation') ?>
-
-    <?php // echo $form->field($model, 'center_id') ?>
-
-    <?php // echo $form->field($model, 'password') ?>
-
-    <?php // echo $form->field($model, 'authKey') ?>
-
-    <?php // echo $form->field($model, 'password_reset_token') ?>
-
-    <?php // echo $form->field($model, 'user_image') ?>
-
-    <?php // echo $form->field($model, 'status') ?>
-
-    <?php // echo $form->field($model, 'updated_at') ?>
-
-    <?php // echo $form->field($model, 'created_at') ?>
-
-    <?php // echo $form->field($model, 'created_by') ?>
-
-    <div class="form-group">
-        <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('Reset', ['class' => 'btn btn-outline-secondary']) ?>
+    <div class="col-xl-3 col-md-6">
+        <?= $form->field($model, 'first_name')->textInput([
+            'maxlength' => true,
+            'placeholder' => 'Jina la kwanza',
+        ]) ?>
+    </div>
+    <div class="col-xl-3 col-md-6">
+        <?= $form->field($model, 'last_name')->textInput([
+            'maxlength' => true,
+            'placeholder' => 'Jina la mwisho',
+        ]) ?>
+    </div>
+    <div class="col-xl-2 col-md-6">
+        <?= $form->field($model, 'designation_designation')->textInput([
+            'maxlength' => true,
+            'placeholder' => 'Bahasha',
+        ])->label('Bahasha') ?>
+    </div>
+    <div class="col-xl-2 col-md-6">
+        <?= $form->field($model, 'center_id')->dropDownList($centerOptions, [
+            'prompt' => 'Sharika zote',
+        ]) ?>
+    </div>
+    <div class="col-xl-2 col-md-6">
+        <?= $form->field($model, 'status')->dropDownList(User::memberStatusOptions(), [
+            'prompt' => 'Hali zote',
+        ]) ?>
+    </div>
+    <div class="col-xl-3 col-md-6">
+        <?= $form->field($model, 'created_at')->input('date') ?>
+    </div>
+    <div class="col-xl-3 col-md-6">
+        <div class="d-grid d-md-flex gap-2">
+            <?= Html::submitButton('Tafuta', ['class' => 'btn btn-primary']) ?>
+            <?= Html::a('Weka Upya', ['index'], ['class' => 'btn btn-outline-secondary']) ?>
+        </div>
     </div>
 
     <?php ActiveForm::end(); ?>

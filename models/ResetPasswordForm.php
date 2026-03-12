@@ -14,15 +14,15 @@ class ResetPasswordForm extends Model
         return [
             [['new_password', 'confirm_password'], 'required'],
             [['new_password', 'confirm_password'], 'string', 'min' => 8],
-            ['confirm_password', 'compare', 'compareAttribute' => 'new_password'],
+            ['confirm_password', 'compare', 'compareAttribute' => 'new_password', 'message' => 'Uthibitisho wa nenosiri haulingani.'],
         ];
     }
 
     public function attributeLabels()
     {
         return [
-            'new_password' => 'New Password',
-            'confirm_password' => 'Confirm Password',
+            'new_password' => 'Nenosiri Jipya',
+            'confirm_password' => 'Thibitisha Nenosiri',
         ];
     }
 

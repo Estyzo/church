@@ -8,8 +8,8 @@ use yii\widgets\ActiveForm;
 /** @var app\models\ResetPasswordForm $model */
 /** @var SystemUser $user */
 
-$this->title = 'Reset Password: ' . $user->username;
-$this->params['breadcrumbs'][] = ['label' => 'System Users', 'url' => ['index']];
+$this->title = 'Weka Upya Nenosiri: ' . $user->username;
+$this->params['breadcrumbs'][] = ['label' => 'Watumiaji wa Mfumo', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="system-user-reset-password">
@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
     <div class="form-group">
-        <?= Html::submitButton('Reset Password', ['class' => 'btn btn-warning']) ?>
+        <?= Html::submitButton('Weka Upya Nenosiri', ['class' => 'btn btn-warning']) ?>
     </div>
     <?php ActiveForm::end(); ?>
 </div>

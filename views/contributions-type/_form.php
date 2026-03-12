@@ -17,7 +17,7 @@ use yii\widgets\ActiveForm;
         <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
 
         <div class="form-group">
-            <?= Html::submitButton('Sajiri', ['class' => 'btn btn-success pull-right']) ?>
+            <?= Html::submitButton('Sajili', ['class' => 'btn btn-success pull-right']) ?>
         </div>
     </div>
 

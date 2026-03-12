@@ -29,8 +29,8 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'center_at') ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('Reset', ['class' => 'btn btn-outline-secondary']) ?>
+        <?= Html::submitButton('Tafuta', ['class' => 'btn btn-primary']) ?>
+        <?= Html::resetButton('Weka Upya', ['class' => 'btn btn-outline-secondary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

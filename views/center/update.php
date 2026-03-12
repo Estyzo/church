@@ -6,9 +6,9 @@ use yii\helpers\Html;
 /** @var app\models\Center $model */
 
 $this->title = 'Badili Sharika: ' . $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Sharika', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Masharika', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Sharika';
+$this->params['breadcrumbs'][] = 'Badili';
 ?>
 <div class="center-update">
 

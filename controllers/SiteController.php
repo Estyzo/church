@@ -265,7 +265,7 @@ class SiteController extends Controller
         $endDate = Yii::$app->request->get('end_date');
 
         if (!$startDate || !$endDate) {
-            throw new \yii\web\BadRequestHttpException("Start and end dates are required.");
+            throw new \yii\web\BadRequestHttpException('Tafadhali weka tarehe ya kuanzia na tarehe ya mwisho.');
         }
 
         // Format dates
@@ -324,7 +324,7 @@ class SiteController extends Controller
         }
 
         // Output file
-        $filename = 'Contribution_Report.xls';
+        $filename = 'Ripoti_Matoleo.xls';
 
         // Clean output buffer to avoid corrupt Excel
         if (ob_get_length()) {

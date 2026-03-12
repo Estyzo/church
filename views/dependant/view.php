@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /** @var app\models\Dependant $model */
 
 $this->title = ucfirst($model->first_name) . " " . ucfirst($model->last_name);
-$this->params['breadcrumbs'][] = ['label' => 'Mtoto', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Watoto', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
@@ -20,7 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('Futa', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
+                'confirm' => 'Una uhakika unataka kufuta taarifa hii?',
                 'method' => 'post',
             ],
         ]) ?>

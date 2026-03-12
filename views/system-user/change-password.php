@@ -6,7 +6,7 @@ use yii\widgets\ActiveForm;
 /** @var yii\web\View $this */
 /** @var app\models\ChangePasswordForm $model */
 
-$this->title = 'Change Password';
+$this->title = 'Badili Nenosiri';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="system-user-change-password">
@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
     <div class="form-group">
-        <?= Html::submitButton('Update Password', ['class' => 'btn btn-primary']) ?>
+        <?= Html::submitButton('Badili Nenosiri', ['class' => 'btn btn-primary']) ?>
     </div>
     <?php ActiveForm::end(); ?>
 </div>

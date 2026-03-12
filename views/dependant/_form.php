@@ -6,6 +6,8 @@ use yii\widgets\ActiveForm;
 /** @var yii\web\View $this */
 /** @var app\models\Dependant $model */
 /** @var yii\widgets\ActiveForm $form */
+
+$today = date('Y-m-d');
 ?>
 
 <div class="dependant-form">
@@ -27,7 +29,8 @@ use yii\widgets\ActiveForm;
     <div class="mb-3 row">
         <div class="col-md-4">
             <?= $form->field($model, 'dob')->input('date', [
-                'class' => 'form-control'
+                'class' => 'form-control',
+                'value' => $model->dob ?: $today,
             ]) ?>
         </div>
 
@@ -59,7 +62,7 @@ use yii\widgets\ActiveForm;
 
     <div class="mb-3 row">
         <div class="form-group">
-            <?= Html::submitButton('Sajiri', ['class' => 'btn btn-success pull-right']) ?>
+            <?= Html::submitButton('Sajili', ['class' => 'btn btn-success pull-right']) ?>
         </div>
     </div>
 

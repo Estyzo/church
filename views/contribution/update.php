@@ -4,11 +4,17 @@ use yii\helpers\Html;
 
 /** @var yii\web\View $this */
 /** @var app\models\Contribution $model */
+/** @var array $paymentType */
+/** @var array $paymentChannel */
+/** @var array $userOptions */
+/** @var array $userDesignations */
+/** @var bool $lockUser */
+/** @var string|null $selectedUserName */
 
 $this->title = 'Badili Matoleo: ' . $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Contributions', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Matoleo', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = 'Badili';
 ?>
 <div class="contribution-update">
 
@@ -17,7 +23,11 @@ $this->params['breadcrumbs'][] = 'Update';
     <?= $this->render('_form', [
         'model' => $model,
         'paymentType' => $paymentType,
-        'paymentChannel' => $paymentChannel
+        'paymentChannel' => $paymentChannel,
+        'userOptions' => $userOptions,
+        'userDesignations' => $userDesignations,
+        'lockUser' => $lockUser,
+        'selectedUserName' => $selectedUserName,
     ]) ?>
 
 </div>

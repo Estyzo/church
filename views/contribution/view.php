@@ -20,7 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('Futa', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
+                'confirm' => 'Una uhakika unataka kufuta taarifa hii?',
                 'method' => 'post',
             ],
         ]) ?>
@@ -43,7 +43,10 @@ $this->params['breadcrumbs'][] = $this->title;
             'contributionsType.name',
             'amount',
             'date_of_payment',
-            'payment_mode',
+            [
+                'attribute' => 'payment_mode',
+                'value' => static fn($data) => \app\models\Contribution::paymentModeLabel($data->payment_mode),
+            ],
             'reference_no',
             'payment_desc:ntext',
             'channel_name',
@@ -51,9 +54,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label' => 'Imesajiliwa Na',
                 'value' => function ($data) {
                 if ($data->createdBy) {
-                    return $data->createdBy->first_name . " " . $data->createdBy->last_name;
+                    $username = $data->createdBy->username ?? '';
+                    $email = $data->createdBy->email ?? '-';
+                    return trim($username . ' (' . $email . ')');
                 } else {
-                    return "NONE";
+                    return "Hakuna";
                 }
             }
             ],

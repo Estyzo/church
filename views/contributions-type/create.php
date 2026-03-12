@@ -5,7 +5,7 @@ use yii\helpers\Html;
 /** @var yii\web\View $this */
 /** @var app\models\ContributionsType $model */
 
-$this->title = 'Sajiri Aina ya Matoleo';
+$this->title = 'Sajili Aina ya Matoleo';
 $this->params['breadcrumbs'][] = ['label' => 'Aina za Matoleo', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

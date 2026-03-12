@@ -6,9 +6,9 @@ use yii\helpers\Html;
 /** @var app\models\Dependant $model */
 
 $this->title = 'Badili Taarifa: ' . ucfirst($model->first_name) . " " . ucfirst($model->last_name);
-$this->params['breadcrumbs'][] = ['label' => 'Mtoto', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Watoto', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = 'Badili';
 ?>
 <div class="dependant-update col-md-12">
 

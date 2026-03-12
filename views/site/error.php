@@ -18,10 +18,10 @@ $this->title = $name;
     </div>
 
     <p>
-        The above error occurred while the Web server was processing your request.
+        Hitilafu hapo juu imetokea wakati seva ya tovuti ilipokuwa ikishughulikia ombi lako.
     </p>
     <p>
-        Please contact us if you think this is a server error. Thank you.
+        Tafadhali wasiliana nasi ikiwa unaamini hii ni hitilafu ya seva.
     </p>
 
 </div>

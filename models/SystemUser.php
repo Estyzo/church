@@ -35,14 +35,14 @@ class SystemUser extends ActiveRecord implements IdentityInterface
     public function attributeLabels()
     {
         return [
-            'username' => 'Username',
-            'email' => 'Email',
-            'password' => 'Password',
-            'role' => 'Role',
-            'center_id' => 'Center',
-            'status' => 'Status',
-            'created_at' => 'Created At',
-            'updated_at' => 'Updated At',
+            'username' => 'Jina la Mtumiaji',
+            'email' => 'Barua Pepe',
+            'password' => 'Nenosiri',
+            'role' => 'Wajibu',
+            'center_id' => 'Sharika',
+            'status' => 'Hali',
+            'created_at' => 'Tarehe ya Kuundwa',
+            'updated_at' => 'Tarehe ya Kubadilishwa',
         ];
     }
 
@@ -88,18 +88,28 @@ class SystemUser extends ActiveRecord implements IdentityInterface
     public static function roleOptions(): array
     {
         return [
-            'admin' => 'Admin',
-            'clerk' => 'Clerk',
-            'viewer' => 'Viewer',
+            'admin' => 'Msimamizi',
+            'clerk' => 'Karani',
+            'viewer' => 'Mtazamaji',
         ];
     }
 
     public static function statusOptions(): array
     {
         return [
-            1 => 'Active',
-            0 => 'Inactive',
+            1 => 'Amilifu',
+            0 => 'Si Amilifu',
         ];
+    }
+
+    public static function roleLabel(?string $role): string
+    {
+        return self::roleOptions()[$role] ?? (($role !== null && $role !== '') ? $role : '-');
+    }
+
+    public static function statusLabel(?int $status): string
+    {
+        return self::statusOptions()[$status] ?? '-';
     }
 
     public function getCenter()

@@ -88,7 +88,7 @@ class SystemUserController extends Controller
     {
         $model = $this->findModel($id);
         if ((int)\Yii::$app->user->id === (int)$model->id) {
-            \Yii::$app->session->setFlash('error', 'You cannot delete your own account.');
+            \Yii::$app->session->setFlash('error', 'Huwezi kufuta akaunti yako mwenyewe.');
             return $this->redirect(['index']);
         }
 
@@ -100,7 +100,7 @@ class SystemUserController extends Controller
     {
         $model = new ChangePasswordForm();
         if ($model->load(\Yii::$app->request->post()) && $model->change()) {
-            \Yii::$app->session->setFlash('success', 'Password changed successfully.');
+            \Yii::$app->session->setFlash('success', 'Nenosiri limebadilishwa kwa mafanikio.');
             return $this->redirect(['/site/index']);
         }
 
@@ -111,12 +111,12 @@ class SystemUserController extends Controller
     {
         $user = $this->findModel($id);
         if ((int)\Yii::$app->user->id === (int)$user->id) {
-            throw new ForbiddenHttpException('Use "Change Password" to update your own password.');
+            throw new ForbiddenHttpException('Tumia "Badili Nenosiri" kubadili nenosiri lako mwenyewe.');
         }
 
         $form = new ResetPasswordForm();
         if ($form->load(\Yii::$app->request->post()) && $form->apply($user)) {
-            \Yii::$app->session->setFlash('success', 'Password reset successfully.');
+            \Yii::$app->session->setFlash('success', 'Nenosiri limewekwa upya kwa mafanikio.');
             return $this->redirect(['index']);
         }
 
@@ -130,7 +130,7 @@ class SystemUserController extends Controller
     {
         $model = SystemUser::findOne((int)$id);
         if ($model === null) {
-            throw new NotFoundHttpException('The requested page does not exist.');
+            throw new NotFoundHttpException('Ukurasa ulioombwa haupo.');
         }
 
         return $model;

@@ -115,15 +115,93 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             'next_of_kin_phone' => 'Mtu wa Karibu',
             'home_congregation' => 'Usharika wa Nyumbani',
             'center_id' => 'Sharika',
-            'password' => 'Nwira',
-            'authKey' => 'Auth Key',
-            'password_reset_token' => 'Password Reset Token',
+            'password' => 'Nenosiri',
+            'authKey' => 'Ufunguo wa Utambulisho',
+            'password_reset_token' => 'Tokeni ya Kuweka Upya Nenosiri',
             'user_image' => 'Picha ya Msharika',
-            'status' => 'Hali ya Usajiri',
-            'updated_at' => 'Muda wa Kubadili taarifa za usajiri',
-            'created_at' => 'Muda wa Kusajiri',
-            'created_by' => 'Aliyesajiri',
+            'status' => 'Hali ya Usajili',
+            'updated_at' => 'Muda wa Kubadili taarifa za usajili',
+            'created_at' => 'Muda wa Kusajili',
+            'created_by' => 'Aliyesajili',
         ];
+    }
+
+    public static function genderOptions(): array
+    {
+        return [
+            'Me' => 'Mwanaume',
+            'Ke' => 'Mwanamke',
+        ];
+    }
+
+    public static function genderLabel(?string $value): string
+    {
+        $labels = self::genderOptions() + [
+            'Male' => 'Mwanaume',
+            'Female' => 'Mwanamke',
+        ];
+
+        return $labels[$value] ?? (($value !== null && $value !== '') ? $value : '-');
+    }
+
+    public static function maritalStatusOptions(): array
+    {
+        return [
+            'Single' => 'Hajaoa/Hajaolewa',
+            'Married' => 'Ameoa/Ameolewa',
+            'Divorced' => 'Ameachika',
+            'Widowed' => 'Mjane',
+        ];
+    }
+
+    public static function maritalStatusLabel(?string $value): string
+    {
+        return self::maritalStatusOptions()[$value] ?? (($value !== null && $value !== '') ? $value : '-');
+    }
+
+    public static function marriageTypeOptions(): array
+    {
+        return [
+            'Mke Moja' => 'Mke Mmoja',
+            'Wake Wengi' => 'Wake Wengi',
+        ];
+    }
+
+    public static function marriageTypeLabel(?string $value): string
+    {
+        return self::marriageTypeOptions()[$value] ?? (($value !== null && $value !== '') ? $value : '-');
+    }
+
+    public static function yesNoOptions(): array
+    {
+        return [
+            1 => 'Ndiyo',
+            0 => 'Hapana',
+        ];
+    }
+
+    public static function yesNoLabel($value): string
+    {
+        if ($value === null || $value === '') {
+            return '-';
+        }
+
+        return (int) $value === 1 ? 'Ndiyo' : 'Hapana';
+    }
+
+    public static function memberStatusOptions(): array
+    {
+        return [
+            1 => 'Hai',
+            2 => 'Si Hai',
+            3 => 'Amehama',
+            4 => 'Amefariki',
+        ];
+    }
+
+    public static function memberStatusLabel(?int $status): string
+    {
+        return self::memberStatusOptions()[$status] ?? '-';
     }
 
     /**
@@ -236,7 +314,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     //matching the old password with your existing password.
     public function findPasswords($attribute, $params)
     {
-        $this->addError($attribute, 'Password updates are managed in system users.');
+        $this->addError($attribute, 'Mabadiliko ya nenosiri yanasimamiwa kupitia watumiaji wa mfumo.');
     }
 
     /**

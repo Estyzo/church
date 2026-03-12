@@ -24,9 +24,9 @@ class ContactForm extends Model
     {
         return [
             // name, email, subject and body are required
-            [['name', 'email', 'subject', 'body'], 'required'],
+            [['name', 'email', 'subject', 'body'], 'required', 'message' => 'Tafadhali jaza {attribute}.'],
             // email has to be a valid email address
-            ['email', 'email'],
+            ['email', 'email', 'message' => 'Barua pepe si sahihi.'],
             // verifyCode needs to be entered correctly
             ['verifyCode', 'captcha'],
         ];
@@ -38,7 +38,11 @@ class ContactForm extends Model
     public function attributeLabels()
     {
         return [
-            'verifyCode' => 'Verification Code',
+            'name' => 'Jina',
+            'email' => 'Barua Pepe',
+            'subject' => 'Kichwa cha Ujumbe',
+            'body' => 'Ujumbe',
+            'verifyCode' => 'Namba ya Uthibitisho',
         ];
     }
 

@@ -10,7 +10,7 @@ use yii\grid\GridView;
 /** @var app\models\CenterSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Sharika';
+$this->title = 'Masharika';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="center-index">
@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Sajiri Shariki', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Sajili Sharika', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
 
@@ -41,10 +41,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 'buttons' => [
                     'view' => function ($url, $model) {
                             return Html::a(
-                                '<span class="glyphicon glyphicon-eye-open">Onesha</span>',
+                                '<span class="glyphicon glyphicon-eye-open">Onyesha</span>',
                                 $url,
                                 [
-                                    'title' => 'Onesha',
+                                    'title' => 'Onyesha',
                                     'class' => 'btn btn-primary btn-xs',
                                 ]
                             );
@@ -54,7 +54,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 '<span class="glyphicon glyphicon-pencil">Badili</span>',
                                 $url,
                                 [
-                                    'title' => 'Onesha',
+                                    'title' => 'Badili',
                                     'class' => 'btn btn-info btn-xs',
                                 ]
                             );

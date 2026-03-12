@@ -5,7 +5,7 @@ use yii\helpers\Html;
 /** @var yii\web\View $this */
 /** @var app\models\Region $model */
 
-$this->title = 'Sajiri Mkoa';
+$this->title = 'Sajili Mkoa';
 $this->params['breadcrumbs'][] = ['label' => 'Mikoa', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

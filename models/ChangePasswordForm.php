@@ -18,7 +18,7 @@ class ChangePasswordForm extends Model
         return [
             [['current_password', 'new_password', 'confirm_password'], 'required'],
             [['new_password', 'confirm_password'], 'string', 'min' => 8],
-            ['confirm_password', 'compare', 'compareAttribute' => 'new_password'],
+            ['confirm_password', 'compare', 'compareAttribute' => 'new_password', 'message' => 'Uthibitisho wa nenosiri haulingani.'],
             ['current_password', 'validateCurrentPassword'],
         ];
     }
@@ -26,9 +26,9 @@ class ChangePasswordForm extends Model
     public function attributeLabels()
     {
         return [
-            'current_password' => 'Current Password',
-            'new_password' => 'New Password',
-            'confirm_password' => 'Confirm Password',
+            'current_password' => 'Nenosiri la Sasa',
+            'new_password' => 'Nenosiri Jipya',
+            'confirm_password' => 'Thibitisha Nenosiri',
         ];
     }
 
@@ -40,7 +40,7 @@ class ChangePasswordForm extends Model
 
         $user = $this->getUser();
         if (!$user || !$user->validatePassword((string)$this->current_password)) {
-            $this->addError($attribute, 'Current password is incorrect.');
+            $this->addError($attribute, 'Nenosiri la sasa si sahihi.');
         }
     }
 

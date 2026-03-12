@@ -8,6 +8,7 @@ use yii\grid\GridView;
 
 $this->title = 'Ripoti';
 $this->params['breadcrumbs'][] = $this->title;
+$today = date('Y-m-d');
 ?>
 <div class="site-about">
     <h1><?= Html::encode($this->title) ?></h1>
@@ -17,7 +18,8 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-md-4">
 
             <?= $form->field($model, 'start_date')->input('date', [
-                'class' => 'form-control'
+                'class' => 'form-control',
+                'value' => $model->start_date ?: $today,
             ]) ?>
         </div>
 
@@ -25,7 +27,8 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-md-4">
 
             <?= $form->field($model, 'end_date')->input('date', [
-                'class' => 'form-control'
+                'class' => 'form-control',
+                'value' => $model->end_date ?: $today,
             ]) ?>
         </div>
 
@@ -35,7 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?php
                 if ($provider != null) {
                     echo Html::a(
-                        'Export',
+                        'Hamisha Excel',
                         [
                             'export',
                             'start_date' => $model->start_date,

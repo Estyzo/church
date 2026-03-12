@@ -83,6 +83,7 @@ class UserSearch extends User
         'is_baptized' => $this->is_baptized,
         'confirmation' => $this->confirmation,
         'is_join_table' => $this->is_join_table,
+        'center_id' => $this->center_id,
         'status' => $this->status,
         'updated_at' => $this->updated_at,
         'created_by' => $this->created_by,

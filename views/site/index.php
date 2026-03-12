@@ -1,4 +1,5 @@
 <?php
+use app\models\Contribution;
 use yii\grid\GridView;
 use yii\helpers\Html;
 
@@ -140,7 +141,7 @@ $metrics = [
                         [
                             'attribute' => 'payment_mode',
                             'label' => 'Njia',
-                            'value' => static fn($data) => $data->payment_mode ?: '-',
+                            'value' => static fn($data) => Contribution::paymentModeLabel($data->payment_mode),
                         ],
                         [
                             'attribute' => 'reference_no',

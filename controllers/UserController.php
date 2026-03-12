@@ -102,28 +102,10 @@ class UserController extends Controller
     {
         $model = new User();
 
-        $maritalStatus = [
-            'Single' => 'Single',
-            'Married' => 'Married',
-            'Divorced' => 'Divorced',
-            'Widowed' => 'Widowed'
-        ];
-
-        $trueFalse = [
-            1 => 'Yes',
-            0 => 'No'
-        ];
-
-        $gender = [
-            'Male' => 'Male',
-            'Female' => 'Female'
-        ];
-
-
-        $mariageType = [
-            'Mke Moja' => 'Mke Moja',
-            'Wake Wengi' => 'Wake Wengi'
-        ];
+        $maritalStatus = User::maritalStatusOptions();
+        $trueFalse = User::yesNoOptions();
+        $gender = User::genderOptions();
+        $mariageType = User::marriageTypeOptions();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
@@ -159,28 +141,10 @@ class UserController extends Controller
     {
         $model = $this->findModel($id);
 
-        $maritalStatus = [
-            'Single' => 'Single',
-            'Married' => 'Married',
-            'Divorced' => 'Divorced',
-            'Widowed' => 'Widowed'
-        ];
-
-        $trueFalse = [
-            1 => 'Yes',
-            0 => 'No'
-        ];
-
-        $gender = [
-            'Male' => 'Male',
-            'Female' => 'Female'
-        ];
-
-
-        $mariageType = [
-            'Mke Moja' => 'Mke Moja',
-            'Wake Wengi' => 'Wake Wengi'
-        ];
+        $maritalStatus = User::maritalStatusOptions();
+        $trueFalse = User::yesNoOptions();
+        $gender = User::genderOptions();
+        $mariageType = User::marriageTypeOptions();
 
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
@@ -223,6 +187,6 @@ class UserController extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+        throw new NotFoundHttpException('Ukurasa ulioombwa haupo.');
     }
 }

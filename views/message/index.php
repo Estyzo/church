@@ -35,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'content:ntext',
             [
                 'label' => 'Umetumwa Na',
-                'value' => 'createdBy.last_name',
+                'value' => static fn($model) => $model->createdBy->username ?? $model->createdBy->email ?? '-',
             ],
 
             'center_at',
@@ -47,10 +47,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 'buttons' => [
                     'view' => function ($url, $model) {
                             return Html::a(
-                                '<span class="glyphicon glyphicon-eye-open">Onesha</span>',
+                                '<span class="glyphicon glyphicon-eye-open">Onyesha</span>',
                                 $url,
                                 [
-                                    'title' => 'View',
+                                    'title' => 'Onyesha',
                                     'class' => 'btn btn-primary btn-xs',
                                 ]
                             );

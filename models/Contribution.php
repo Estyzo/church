@@ -63,12 +63,27 @@ class Contribution extends \yii\db\ActiveRecord
             'user_id' => 'Jina la Msharika',
             'contribution_type_id' => 'Aina ya Mchango',
             'amount' => 'Kiasi',
-            'date_of_payment' => 'Siku aliyolipia',
-            'payment_mode' => 'Aina ya Ulipaji',
-            'reference_no' => 'Kumbu Namba',
+            'date_of_payment' => 'Tarehe ya Malipo',
+            'payment_mode' => 'Njia ya Malipo',
+            'reference_no' => 'Namba ya Kumbukumbu',
             'payment_desc' => 'Maelezo ya Malipo',
-            'channel_name' => 'Jina la Aina ya Ulipaji',
+            'channel_name' => 'Njia ya Kupokea Malipo',
         ];
+    }
+
+    public static function paymentModeOptions(): array
+    {
+        return [
+            'CASH' => 'Fedha Taslimu',
+            'MOBILE' => 'Simu',
+            'BANK' => 'Benki',
+            'CONTROLNO' => 'Namba ya Udhibiti',
+        ];
+    }
+
+    public static function paymentModeLabel(?string $value): string
+    {
+        return self::paymentModeOptions()[$value] ?? (($value !== null && $value !== '') ? $value : '-');
     }
 
     /**

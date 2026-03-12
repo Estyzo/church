@@ -23,19 +23,19 @@ use yii\widgets\ActiveForm;
         <div class="col-md-4">
             <?= $form->field($model, 'password')->passwordInput([
                 'maxlength' => true,
-                'placeholder' => $model->isNewRecord ? 'Set password' : 'Leave empty to keep current password',
+                'placeholder' => $model->isNewRecord ? 'Weka nenosiri' : 'Acha wazi kuhifadhi nenosiri la sasa',
             ]) ?>
         </div>
     </div>
 
     <div class="row">
         <div class="col-md-4">
-            <?= $form->field($model, 'role')->dropDownList(SystemUser::roleOptions(), ['prompt' => 'Select role']) ?>
+            <?= $form->field($model, 'role')->dropDownList(SystemUser::roleOptions(), ['prompt' => 'Chagua wajibu']) ?>
         </div>
         <div class="col-md-4">
             <?= $form->field($model, 'center_id')->dropDownList(
                 ArrayHelper::map(Center::find()->orderBy(['name' => SORT_ASC])->all(), 'id', 'name'),
-                ['prompt' => 'Select center']
+                ['prompt' => 'Chagua sharika']
             ) ?>
         </div>
         <div class="col-md-4">
@@ -44,7 +44,7 @@ use yii\widgets\ActiveForm;
     </div>
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Create User' : 'Update User', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton($model->isNewRecord ? 'Sajili Mtumiaji' : 'Badili Mtumiaji', ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
