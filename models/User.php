@@ -63,6 +63,38 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         return 'members';
     }
 
+    public function beforeValidate()
+    {
+        if (!parent::beforeValidate()) {
+            return false;
+        }
+
+        $this->phone = $this->normalizePhoneNumber($this->phone);
+
+        return true;
+    }
+
+    private function normalizePhoneNumber(?string $phone): ?string
+    {
+        $phone = preg_replace('/[^\d+]/', '', (string) $phone) ?: '';
+        if ($phone === '') {
+            return null;
+        }
+
+        if (str_starts_with($phone, '+')) {
+            return $phone;
+        }
+
+        if (str_starts_with($phone, '0')) {
+            return '+225' . substr($phone, 1);
+        }
+
+        if (str_starts_with($phone, '225')) {
+            return '+' . $phone;
+        }
+
+        return $phone;
+    }
     /**
      * {@inheritdoc}
      */

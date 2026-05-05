@@ -26,6 +26,9 @@ $config = [
             ],
         ],
         'db' => $db,
+        'smsService' => array_merge([
+            'class' => app\components\SmsService::class,
+        ], $params['sms'] ?? []),
     ],
     'params' => $params,
 

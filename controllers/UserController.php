@@ -114,6 +114,16 @@ class UserController extends Controller
                 $model->created_by = Yii::$app->user->id;
                 $model->created_at = date('Y-m-d H:i:s');
                 if ($model->save()) {
+                    try {
+                        $notification = Yii::$app->smsService->queueMemberRegistration($model);
+                        if ($notification !== null && !Yii::$app->smsService->sendQueued($notification)) {
+                            Yii::$app->session->setFlash('warning', 'Msharika amesajiliwa kikamilifu, lakini SMS haikutumwa sasa. Imehifadhiwa na inaweza kutumwa baadaye.');
+                        }
+                    } catch (\Throwable $e) {
+                        Yii::warning('SMS confirmation could not be queued for member ' . $model->id . ': ' . $e->getMessage(), __METHOD__);
+                        Yii::$app->session->setFlash('warning', 'Msharika amesajiliwa kikamilifu, lakini SMS haikuweza kuhifadhiwa/kutumwa sasa.');
+                    }
+
                     return $this->redirect(['view', 'id' => $model->id]);
                 }
             }
