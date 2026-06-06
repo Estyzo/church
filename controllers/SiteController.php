@@ -33,10 +33,25 @@ class SiteController extends Controller
                 'only' => ['logout', 'index', 'report', 'export'],
                 'rules' => [
                     [
-                        'actions' => ['logout', 'index', 'report', 'export'],
+                        'actions' => ['logout', 'index'],
                         'allow' => true,
                         'roles' => ['@'],
-                        'matchCallback' => static fn() => RoleAccess::hasAny(['admin', 'clerk', 'viewer']),
+                        'matchCallback' => static fn() => RoleAccess::hasAny([
+                            RoleAccess::ROLE_ADMIN,
+                            RoleAccess::ROLE_CLERK,
+                            RoleAccess::ROLE_VIEWER,
+                            RoleAccess::ROLE_CONTRIBUTION_REGISTRAR,
+                        ]),
+                    ],
+                    [
+                        'actions' => ['report', 'export'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                        'matchCallback' => static fn() => RoleAccess::hasAny([
+                            RoleAccess::ROLE_ADMIN,
+                            RoleAccess::ROLE_CLERK,
+                            RoleAccess::ROLE_VIEWER,
+                        ]),
                     ],
                 ],
             ],
@@ -79,6 +94,11 @@ class SiteController extends Controller
         if (Yii::$app->user->isGuest) {
             return $this->redirect(['site/login']);
         }
+
+        if (RoleAccess::isContributionRegistrar()) {
+            return $this->redirect(['contribution/create']);
+        }
+
         $searchModel = new ContributionSearch();
         $dataProvider = $searchModel->searchRecent();
 
@@ -127,6 +147,10 @@ class SiteController extends Controller
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
+            if (RoleAccess::isContributionRegistrar()) {
+                return $this->redirect(['contribution/create']);
+            }
+
             // return $this->goBack();
             return $this->redirect('index');
         }

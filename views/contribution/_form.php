@@ -16,14 +16,22 @@ use yii\widgets\ActiveForm;
 /** @var array $userDesignations */
 /** @var bool $lockUser */
 /** @var string|null $selectedUserName */
+/** @var bool $useEnvelopeOnly */
 
 $today = date('Y-m-d');
+$useEnvelopeOnly = $useEnvelopeOnly ?? false;
 $selectedDesignation = 'Haijawekwa';
 if (!empty($model->user_id) && isset($userDesignations[$model->user_id])) {
     $selectedDesignation = $userDesignations[$model->user_id];
 }
 
 $designationLabel = (new User())->getAttributeLabel('designation_designation');
+$memberContextTitle = $useEnvelopeOnly ? 'Muktadha wa Bahasha' : 'Muktadha wa Msharika';
+$memberContextCopy = $useEnvelopeOnly
+    ? 'Chagua namba ya bahasha, kisha endelea na taarifa za toleo.'
+    : 'Chagua msharika au hakiki aliyefunguliwa tayari, kisha thibitisha bahasha kabla ya kuendelea na taarifa za toleo.';
+$memberSelectorLabel = $useEnvelopeOnly ? $designationLabel : $model->getAttributeLabel('user_id');
+$memberSelectorPrompt = $useEnvelopeOnly ? 'Chagua Bahasha' : 'Chagua Msharika';
 ?>
 
 <div class="contribution-form">
@@ -32,13 +40,13 @@ $designationLabel = (new User())->getAttributeLabel('designation_designation');
     <div class="card ui-section-card border-0">
         <div class="card-body">
             <div class="ui-section-eyebrow">Hatua ya 1</div>
-            <h2 class="ui-section-title">Muktadha wa Msharika</h2>
-            <p class="ui-section-copy">Chagua msharika au hakiki aliyefunguliwa tayari, kisha thibitisha bahasha kabla ya kuendelea na taarifa za toleo.</p>
+            <h2 class="ui-section-title"><?= Html::encode($memberContextTitle) ?></h2>
+            <p class="ui-section-copy"><?= Html::encode($memberContextCopy) ?></p>
 
             <div class="row g-3">
                 <div class="col-lg-6">
                     <?php if ($lockUser): ?>
-                        <?= Html::label($model->getAttributeLabel('user_id'), 'contribution-member-name', ['class' => 'form-label']) ?>
+                        <?= Html::label($memberSelectorLabel, 'contribution-member-name', ['class' => 'form-label']) ?>
                         <?= Html::textInput('contribution-member-name', $selectedUserName, [
                             'class' => 'form-control',
                             'id' => 'contribution-member-name',
@@ -47,9 +55,9 @@ $designationLabel = (new User())->getAttributeLabel('designation_designation');
                         <?= Html::activeHiddenInput($model, 'user_id') ?>
                     <?php else: ?>
                         <?= $form->field($model, 'user_id')->dropDownList($userOptions, [
-                            'prompt' => 'Chagua Msharika',
+                            'prompt' => $memberSelectorPrompt,
                             'id' => 'contribution-user-id',
-                        ]) ?>
+                        ])->label($memberSelectorLabel) ?>
                     <?php endif; ?>
                 </div>
                 <div class="col-lg-6">

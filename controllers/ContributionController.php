@@ -31,13 +31,26 @@ class ContributionController extends Controller
                         'allow' => true,
                         'roles' => ['@'],
                         'actions' => ['index', 'view'],
-                        'matchCallback' => static fn() => RoleAccess::hasAny(['admin', 'clerk', 'viewer']),
+                        'matchCallback' => static fn() => RoleAccess::hasAny([
+                            RoleAccess::ROLE_ADMIN,
+                            RoleAccess::ROLE_CLERK,
+                            RoleAccess::ROLE_VIEWER,
+                        ]),
                     ],
                     [
                         'allow' => true,
                         'roles' => ['@'],
                         'actions' => ['create', 'contribution', 'update', 'delete'],
-                        'matchCallback' => static fn() => RoleAccess::hasAny(['admin', 'clerk']),
+                        'matchCallback' => static fn() => RoleAccess::hasAny([
+                            RoleAccess::ROLE_ADMIN,
+                            RoleAccess::ROLE_CLERK,
+                        ]),
+                    ],
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                        'actions' => ['create'],
+                        'matchCallback' => static fn() => RoleAccess::isContributionRegistrar(),
                     ],
                 ],
             ],
@@ -125,6 +138,11 @@ class ContributionController extends Controller
             if ($model->load($this->request->post())) {
                 $model->created_by = Yii::$app->user->id;
                 if ($model->save()) {
+                    if (RoleAccess::isContributionRegistrar()) {
+                        Yii::$app->session->setFlash('success', 'Toleo limesajiliwa kwa mafanikio.');
+                        return $this->redirect(['create']);
+                    }
+
                     return $this->redirect(['view', 'id' => $model->id]);
                 }
             }
@@ -204,10 +222,15 @@ class ContributionController extends Controller
 
     private function buildMemberFormOptions(?User $lockedMember = null): array
     {
+        $useEnvelopeOnly = RoleAccess::isContributionRegistrar();
         $members = $lockedMember !== null
             ? [$lockedMember]
             : User::find()
-                ->orderBy([
+                ->orderBy($useEnvelopeOnly ? [
+                    'designation_designation' => SORT_ASC,
+                    'designation' => SORT_ASC,
+                    'id' => SORT_ASC,
+                ] : [
                     'first_name' => SORT_ASC,
                     'middle_name' => SORT_ASC,
                     'last_name' => SORT_ASC,
@@ -218,14 +241,20 @@ class ContributionController extends Controller
         $userDesignations = [];
 
         foreach ($members as $member) {
-            $fullName = trim(implode(' ', array_filter([
-                $member->first_name,
-                $member->middle_name,
-                $member->last_name,
-            ])));
+            $envelopeNumber = $member->designation_designation ?: $member->designation;
+            $userDesignations[$member->id] = $envelopeNumber ?: 'Haijawekwa';
 
-            $userOptions[$member->id] = $fullName !== '' ? $fullName : 'Msharika #' . $member->id;
-            $userDesignations[$member->id] = $member->designation_designation ?: 'Haijawekwa';
+            if ($useEnvelopeOnly) {
+                $userOptions[$member->id] = $envelopeNumber ?: 'Haijawekwa #' . $member->id;
+            } else {
+                $fullName = trim(implode(' ', array_filter([
+                    $member->first_name,
+                    $member->middle_name,
+                    $member->last_name,
+                ])));
+
+                $userOptions[$member->id] = $fullName !== '' ? $fullName : 'Msharika #' . $member->id;
+            }
         }
 
         return [
@@ -233,6 +262,7 @@ class ContributionController extends Controller
             'userDesignations' => $userDesignations,
             'lockUser' => $lockedMember !== null,
             'selectedUserName' => $lockedMember !== null ? ($userOptions[$lockedMember->id] ?? '') : null,
+            'useEnvelopeOnly' => $useEnvelopeOnly,
         ];
     }
 }

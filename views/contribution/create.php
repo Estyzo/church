@@ -10,6 +10,7 @@ use yii\helpers\Html;
 /** @var array $userDesignations */
 /** @var bool $lockUser */
 /** @var string|null $selectedUserName */
+/** @var bool $useEnvelopeOnly */
 
 $this->title = 'Sajili Matoleo';
 $this->params['breadcrumbs'][] = ['label' => 'Matoleo', 'url' => ['index']];
@@ -27,6 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'userDesignations' => $userDesignations,
         'lockUser' => $lockUser,
         'selectedUserName' => $selectedUserName,
+        'useEnvelopeOnly' => $useEnvelopeOnly,
     ]) ?>
 
 </div>

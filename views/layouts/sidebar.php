@@ -3,6 +3,11 @@
 use yii\helpers\Html;
 
 $currentRoute = Yii::$app->controller ? Yii::$app->controller->getRoute() : '';
+$currentRole = !Yii::$app->user->isGuest && isset(Yii::$app->user->identity->role)
+    ? (string)Yii::$app->user->identity->role
+    : null;
+$isContributionRegistrar = $currentRole === \app\components\RoleAccess::ROLE_CONTRIBUTION_REGISTRAR;
+$homeRoute = $isContributionRegistrar ? ['contribution/create'] : ['site/index'];
 
 $isActive = static function (string $routePattern) use ($currentRoute): bool {
     if (substr($routePattern, -2) === '/*') {
@@ -38,12 +43,21 @@ $isAreaMenuActive = $isActive('district/*') || $isActive('region/*');
         <div class="m-header" style="padding-left:32%;">
             <?= Html::a(
                 Html::img('@web/images/logo_kkkt.jpeg', ['class' => 'img-fluid', 'style' => 'height:50px']),
-                ['site/index'],
+                $homeRoute,
                 ['class' => 'b-brand text-primary']
             ) ?>
         </div>
         <div class="navbar-content">
             <ul class="pc-navbar">
+                <?php if ($isContributionRegistrar): ?>
+                <li class="<?= Html::encode($itemClass('contribution/create')) ?>">
+                    <?= Html::a(
+                        '<span class="pc-micon"><i class="ti ti-report-money"></i></span> <span class="pc-mtext">Sajili Matoleo</span>',
+                        ['contribution/create'],
+                        $linkOptions('contribution/create')
+                    ) ?>
+                </li>
+                <?php else: ?>
                 <li class="<?= Html::encode($itemClass('site/index')) ?>">
                     <?= Html::a(
                         '<span class="pc-micon"><i class="ti ti-dashboard"></i></span> <span class="pc-mtext">Dashibodi</span>',
@@ -155,6 +169,7 @@ $isAreaMenuActive = $isActive('district/*') || $isActive('region/*');
                         $linkOptions('system-user/*')
                     ) ?>
                 </li>
+                <?php endif; ?>
                 <?php endif; ?>
 
                 <hr class="sidebar-divider">

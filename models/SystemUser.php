@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use app\components\RoleAccess;
 use yii\base\Exception;
 use Yii;
 use yii\db\ActiveRecord;
@@ -88,9 +89,10 @@ class SystemUser extends ActiveRecord implements IdentityInterface
     public static function roleOptions(): array
     {
         return [
-            'admin' => 'Msimamizi',
-            'clerk' => 'Karani',
-            'viewer' => 'Mtazamaji',
+            RoleAccess::ROLE_ADMIN => 'Msimamizi',
+            RoleAccess::ROLE_CLERK => 'Karani',
+            RoleAccess::ROLE_VIEWER => 'Mtazamaji',
+            RoleAccess::ROLE_CONTRIBUTION_REGISTRAR => 'Msajili wa Matoleo',
         ];
     }
 
