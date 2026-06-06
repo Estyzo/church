@@ -137,7 +137,9 @@ class ContributionController extends Controller
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 $model->created_by = Yii::$app->user->id;
-                if ($model->save()) {
+                if (RoleAccess::isContributionRegistrar() && !$this->memberBelongsToCurrentCenter((int)$model->user_id)) {
+                    $model->addError('user_id', 'Bahasha hii haipo kwenye sharika lako.');
+                } elseif ($model->save()) {
                     if (RoleAccess::isContributionRegistrar()) {
                         Yii::$app->session->setFlash('success', 'Toleo limesajiliwa kwa mafanikio.');
                         return $this->redirect(['create']);
@@ -223,9 +225,21 @@ class ContributionController extends Controller
     private function buildMemberFormOptions(?User $lockedMember = null): array
     {
         $useEnvelopeOnly = RoleAccess::isContributionRegistrar();
-        $members = $lockedMember !== null
-            ? [$lockedMember]
-            : User::find()
+        if ($lockedMember !== null) {
+            $members = [$lockedMember];
+        } else {
+            $query = User::find();
+
+            if ($useEnvelopeOnly) {
+                $centerId = $this->currentUserCenterId();
+                if ($centerId === null) {
+                    $query->andWhere('0=1');
+                } else {
+                    $query->andWhere(['center_id' => $centerId]);
+                }
+            }
+
+            $members = $query
                 ->orderBy($useEnvelopeOnly ? [
                     'designation_designation' => SORT_ASC,
                     'designation' => SORT_ASC,
@@ -236,6 +250,7 @@ class ContributionController extends Controller
                     'last_name' => SORT_ASC,
                 ])
                 ->all();
+        }
 
         $userOptions = [];
         $userDesignations = [];
@@ -264,5 +279,30 @@ class ContributionController extends Controller
             'selectedUserName' => $lockedMember !== null ? ($userOptions[$lockedMember->id] ?? '') : null,
             'useEnvelopeOnly' => $useEnvelopeOnly,
         ];
+    }
+
+    private function currentUserCenterId(): ?int
+    {
+        $identity = Yii::$app->user->identity;
+        if ($identity === null || !isset($identity->center_id) || empty($identity->center_id)) {
+            return null;
+        }
+
+        return (int)$identity->center_id;
+    }
+
+    private function memberBelongsToCurrentCenter(int $memberId): bool
+    {
+        $centerId = $this->currentUserCenterId();
+        if ($memberId <= 0 || $centerId === null) {
+            return false;
+        }
+
+        return User::find()
+            ->where([
+                'id' => $memberId,
+                'center_id' => $centerId,
+            ])
+            ->exists();
     }
 }
